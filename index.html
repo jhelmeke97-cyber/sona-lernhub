@@ -1,0 +1,1813 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SONA LERNHUB — Japanese Sushi & Kitchen Bar</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cormorant Garamond (Web-Äquivalent für Audrey) & Inter (Web-Äquivalent für Neue Haas Display) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+           SONA BRAND GUIDELINES — STRENGE FARB- & TYPOGRAFIE-REGELN
+           5 Farben, keine sechste. Keine Schatten, keine Verläufe, keine Emojis.
+           ========================================================================== */
+        :root {
+            --brand-black: #000000;
+            --charcoal-grey: #121212;
+            --deep-grey: #191919;
+            --cream-beige: #F5ECD7;
+            --silk-beige: #E3D5CA;
+        }
+
+        * {
+            box-sizing: border-box;
+            box-shadow: none !important;
+            text-shadow: none !important;
+        }
+
+        body {
+            background-color: var(--charcoal-grey);
+            color: var(--cream-beige);
+            font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 300;
+            line-height: 1.75;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Display-Schrift (Audrey Äquivalent) */
+        .font-audrey {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        .font-audrey-bold {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+        }
+
+        /* Claim: Neue Haas Display Light, Sperrung 0.42em, Versalien */
+        .sona-claim {
+            font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 0.42em;
+            font-size: 0.7rem;
+            color: var(--cream-beige);
+        }
+
+        /* Kicker / Rubriken: Sperrung 0.3em, Versalien */
+        .sona-kicker {
+            font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            font-size: 0.6875rem;
+            color: var(--silk-beige);
+        }
+
+        /* Positionsnamen / Zwischentitel: Neue Haas Medium, 0.18em, Versalien */
+        .sona-item-title {
+            font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            font-size: 0.85rem;
+            color: var(--cream-beige);
+        }
+
+        /* Tabellarische Ziffern */
+        .tabular-nums {
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Feine Haarlinien (Deep Grey & Cream Beige 20%) */
+        .hairline-t {
+            border-top: 1px solid rgba(245, 236, 215, 0.18);
+        }
+        .hairline-b {
+            border-bottom: 1px solid rgba(245, 236, 215, 0.18);
+        }
+        .hairline-border {
+            border: 1px solid rgba(245, 236, 215, 0.22);
+        }
+        .hairline-border-strong {
+            border: 1px solid var(--cream-beige);
+        }
+
+        /* Eingabefelder & Buttons ohne Schatten oder fremde Farben */
+        input, textarea, select {
+            background-color: var(--brand-black);
+            color: var(--cream-beige);
+            border: 1px solid rgba(245, 236, 215, 0.3);
+            outline: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            transition: border-color 0.2s ease;
+        }
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--cream-beige);
+        }
+        input::placeholder, textarea::placeholder {
+            color: var(--silk-beige);
+            opacity: 0.7;
+        }
+
+        .sona-btn {
+            background-color: transparent;
+            color: var(--cream-beige);
+            border: 1px solid rgba(245, 236, 215, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.22em;
+            font-size: 0.72rem;
+            font-weight: 400;
+            padding: 0.75rem 1.5rem;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+            cursor: pointer;
+        }
+        .sona-btn:hover {
+            background-color: var(--cream-beige);
+            color: var(--brand-black);
+            border-color: var(--cream-beige);
+        }
+
+        .sona-btn-filled {
+            background-color: var(--cream-beige);
+            color: var(--brand-black);
+            border: 1px solid var(--cream-beige);
+            text-transform: uppercase;
+            letter-spacing: 0.22em;
+            font-size: 0.72rem;
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            cursor: pointer;
+        }
+        .sona-btn-filled:hover {
+            background-color: var(--silk-beige);
+            border-color: var(--silk-beige);
+        }
+
+        /* Bildsprache: Gedämpft, warm, nie bunter als der Raum */
+        .sona-image-container {
+            position: relative;
+            background-color: var(--brand-black);
+            overflow: hidden;
+        }
+        .sona-image {
+            filter: brightness(0.72) contrast(1.08) saturate(0.75) sepia(0.12);
+            transition: filter 0.4s ease;
+        }
+
+        /* Zeilenlänge nach Brandkit: 45 bis 75 Zeichen */
+        .sona-prose {
+            max-width: 68ch;
+        }
+
+        /* Scrollbar dezent in Markenfarben */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--brand-black);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--deep-grey);
+            border: 1px solid rgba(245, 236, 215, 0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#F5ECD7] selection:text-[#000000]">
+
+    <!-- ==========================================================================
+         1. ANMELDEBILDSCHIRM (ZUGANGSCODE: Sona.lernen / taste.the.passion)
+         ========================================================================== -->
+    <div id="login-view" class="fixed inset-0 z-50 bg-[#000000] flex flex-col justify-between p-6 md:p-12 overflow-y-auto">
+        <!-- Obere Claim-Zeile -->
+        <div class="w-full max-w-5xl mx-auto flex justify-between items-center py-2 hairline-b">
+            <span class="sona-claim">TASTE THE PASSION</span>
+            <span class="sona-kicker">INTERNE LERNPLATTFORM</span>
+        </div>
+
+        <!-- Zentrum mit Enso-Logo & Code-Eingabe -->
+        <div class="my-auto w-full max-w-md mx-auto py-12 text-center">
+            <!-- Schutzraum rund um das Primärlogo (mind. 1/4 Kreisdurchmesser) -->
+            <div class="p-8 md:p-10 flex flex-col items-center justify-center">
+                <!-- SONA Enso-Kreis Primärlogo SVG -->
+                <svg viewBox="0 0 320 260" class="w-56 md:w-64 h-auto" aria-label="SONA Logo">
+                    <!-- Offener Enso-Pinselkreis in Cream Beige (#F5ECD7) -->
+                    <path d="M 110 88 C 122 44, 174 20, 224 38 C 276 56, 302 115, 284 170 C 266 222, 206 248, 152 228 C 122 216, 102 192, 95 162" 
+                          fill="none" stroke="#F5ECD7" stroke-width="6.5" stroke-linecap="round" />
+                    <path d="M 113 84 C 128 42, 178 22, 226 40 C 272 58, 297 116, 280 168 C 261 218, 204 242, 150 223 C 126 214, 107 194, 99 169" 
+                          fill="none" stroke="#F5ECD7" stroke-width="2.2" stroke-linecap="round" opacity="0.85" />
+                    <!-- Feine Pinsel-Ausläufer unten links -->
+                    <path d="M 103 184 C 118 212, 152 232, 192 233" 
+                          fill="none" stroke="#F5ECD7" stroke-width="1.3" stroke-linecap="round" />
+                    <path d="M 116 204 C 138 225, 170 236, 205 232" 
+                          fill="none" stroke="#F5ECD7" stroke-width="1" stroke-linecap="round" />
+                    <!-- Wortmarke SONA links im offenen Kreis auf der optischen Mittelachse -->
+                    <text x="26" y="141" fill="#F5ECD7" font-family="'Cormorant Garamond', Georgia, serif" font-size="40" font-weight="400" letter-spacing="11">SONA</text>
+                </svg>
+
+                <div class="mt-4 pt-3 hairline-t w-44 text-center">
+                    <div class="font-audrey text-sm tracking-[0.2em] text-[#F5ECD7]" style="text-transform: none; letter-spacing: 0.14em;">Japanese Sushi</div>
+                    <div class="font-audrey-bold text-sm tracking-[0.18em] text-[#F5ECD7] mt-0.5" style="text-transform: none; letter-spacing: 0.12em;">Kitchen &amp; Bar</div>
+                </div>
+            </div>
+
+            <div class="mt-2 mb-8">
+                <p class="sona-kicker mb-2">DIGITALE AKADEMIE</p>
+                <h1 class="font-audrey text-2xl md:text-3xl text-[#F5ECD7]">SONA LERNHUB</h1>
+                <p class="text-sm text-[#E3D5CA] mt-2 lowercase">
+                    leitfäden, schulungen, warenkunde und qualitätsstandards für küche, bar und service
+                </p>
+            </div>
+
+            <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4 text-left">
+                <div>
+                    <label for="access-code" class="block sona-kicker mb-2">ZUGANGSCODE EINGEBEN</label>
+                    <input 
+                        type="password" 
+                        id="access-code" 
+                        placeholder="universalcode oder admincode" 
+                        class="w-full px-4 py-3.5 text-sm rounded"
+                        autocomplete="off"
+                        required
+                    >
+                </div>
+                <div id="login-error" class="hidden py-2 px-3 bg-[#191919] hairline-border text-xs text-[#E3D5CA] lowercase">
+                    der eingegebene code wurde nicht erkannt. bitte zugangscode prüfen.
+                </div>
+                <button type="submit" class="w-full sona-btn-filled rounded py-3.5">
+                    ANMELDEN
+                </button>
+            </form>
+
+            <!-- Schnellzugang zum einfachen Testen in der Vorschau -->
+            <div class="mt-10 pt-6 hairline-t text-left">
+                <p class="sona-kicker mb-3 text-center">DIREKTWAHL FÜR VORSCHAU &amp; TEST</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <button type="button" onclick="quickLogin('Sona.lernen')" class="p-3 bg-[#121212] hover:bg-[#191919] hairline-border rounded text-left transition">
+                        <div class="sona-kicker">MITARBEITER-ZUGANG</div>
+                        <div class="text-xs text-[#F5ECD7] mt-1 font-mono">Sona.lernen</div>
+                        <div class="text-[11px] text-[#E3D5CA] mt-0.5 lowercase">lesen, suchen, lernkontrollen</div>
+                    </button>
+                    <button type="button" onclick="quickLogin('taste.the.passion')" class="p-3 bg-[#121212] hover:bg-[#191919] hairline-border rounded text-left transition">
+                        <div class="sona-kicker">ADMIN-ZUGANG</div>
+                        <div class="text-xs text-[#F5ECD7] mt-1 font-mono">taste.the.passion</div>
+                        <div class="text-[11px] text-[#E3D5CA] mt-0.5 lowercase">themen anlegen &amp; bearbeiten</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Untere Fußzeile -->
+        <div class="w-full max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center py-3 hairline-t gap-2">
+            <span class="sona-kicker">SONA BRAND GUIDELINES AUSGABE 01</span>
+            <span class="sona-claim">TASTE THE PASSION</span>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         2. HAUPTANWENDUNG (HEADER, INHALT, FOOTER)
+         ========================================================================== -->
+    <div id="app-shell" class="hidden flex-col min-h-screen">
+        
+        <!-- Laufende Kopfzeile gemäß Speisekarten- & Brandkit-Regeln -->
+        <div class="bg-[#000000] hairline-b px-4 sm:px-8 py-2">
+            <div class="max-w-6xl mx-auto flex justify-between items-center">
+                <span class="sona-claim">TASTE THE PASSION</span>
+                <div class="flex items-center gap-4">
+                    <span id="role-indicator" class="sona-kicker">MODUS: MITARBEITER</span>
+                    <button onclick="toggleRoleQuick()" id="switch-role-btn" class="text-[11px] uppercase tracking-[0.2em] text-[#E3D5CA] hover:text-[#F5ECD7] underline underline-offset-4">
+                        ZU ADMIN WECHSELN
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Haupt-Navigation -->
+        <header class="bg-[#000000] hairline-b sticky top-0 z-30 px-4 sm:px-8 py-4">
+            <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-4">
+                <!-- Wortmarke neben dem Kreis (Freigegebenes Lockup für schmale Website-Köpfe laut Seite 10) -->
+                <button onclick="navigateToHome()" class="flex items-center gap-4 text-left group focus:outline-none">
+                    <svg viewBox="0 0 260 120" class="h-10 sm:h-12 w-auto" aria-label="SONA Header Logo">
+                        <path d="M 145 36 C 154 14, 184 4, 212 14 C 240 24, 254 56, 244 86 C 234 112, 202 124, 174 114 C 158 108, 147 95, 143 79" 
+                              fill="none" stroke="#F5ECD7" stroke-width="4.2" stroke-linecap="round" />
+                        <path d="M 148 92 C 158 106, 176 116, 198 116" 
+                              fill="none" stroke="#F5ECD7" stroke-width="1.2" stroke-linecap="round" />
+                        <text x="8" y="70" fill="#F5ECD7" font-family="'Cormorant Garamond', Georgia, serif" font-size="29" font-weight="400" letter-spacing="8">SONA</text>
+                    </svg>
+                    <div class="pl-4 border-l border-[#F5ECD7]/25">
+                        <div class="font-audrey text-base sm:text-lg tracking-[0.18em] text-[#F5ECD7]">LERNHUB</div>
+                        <div class="text-[11px] text-[#E3D5CA] lowercase tracking-normal">japanese sushi, kitchen &amp; bar</div>
+                    </div>
+                </button>
+
+                <!-- Aktionsleiste rechts -->
+                <div class="flex items-center flex-wrap gap-2 sm:gap-3">
+                    <button onclick="navigateToHome()" id="nav-home-btn" class="sona-btn rounded px-3.5 py-2">
+                        INHALTSVERZEICHNIS
+                    </button>
+                    <button onclick="openTopicModal()" id="admin-new-topic-btn" class="hidden sona-btn-filled rounded px-3.5 py-2">
+                        + NEUES THEMA
+                    </button>
+                    <button onclick="openGoogleSitesGuide()" class="sona-btn rounded px-3.5 py-2" title="Anleitung & Einbettungscode für Google Sites">
+                        GOOGLE SITES EXPORT
+                    </button>
+                    <button onclick="logout()" class="sona-btn rounded px-3 py-2 text-[#E3D5CA]" title="Abmelden">
+                        ABMELDEN
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamischer Hauptbereich -->
+        <main class="flex-grow w-full max-w-6xl mx-auto px-4 sm:px-8 py-10 md:py-16">
+            
+            <!-- ======================================================================
+                 ANSICHT A: LANDINGPAGE + SUCHE + INHALTSVERZEICHNIS
+                 ====================================================================== -->
+            <section id="landing-view" class="space-y-14">
+                
+                <!-- 1. Hero Bereich mit Marken-Erläuterung -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end pb-12 hairline-b">
+                    <div class="lg:col-span-8 space-y-4">
+                        <div class="sona-kicker">VERBINDLICHE GRUNDLAGEN &amp; SCHULUNGSKATALOG</div>
+                        <h1 class="font-audrey text-3xl sm:text-5xl text-[#F5ECD7] leading-tight">
+                            SONA LERNHUB
+                        </h1>
+                        <p class="text-[#E3D5CA] text-sm sm:text-base sona-prose lowercase">
+                            dieser lernhub bündelt alle leitfäden, warenkunden, abläufe und schulungen für küche, bar und service. 
+                            jedes themenfeld besitzt eine eigene unterseite und folgt einem logischen aufbau — von der markenhaltung 
+                            über die trockene reifung von fisch bis zum abendservice.
+                        </p>
+                    </div>
+                    <div class="lg:col-span-4 bg-[#191919] hairline-border p-6 rounded space-y-3">
+                        <div class="flex justify-between items-center hairline-b pb-2">
+                            <span class="sona-kicker">KATALOG-STATUS</span>
+                            <span id="stat-total-topics" class="tabular-nums text-xs text-[#F5ECD7]">06 MODULE</span>
+                        </div>
+                        <div class="flex justify-between items-center hairline-b pb-2">
+                            <span class="sona-kicker">LERNFORTSCHRITT</span>
+                            <span id="stat-read-topics" class="tabular-nums text-xs text-[#F5ECD7]">0 / 6 GELESEN</span>
+                        </div>
+                        <div class="pt-1">
+                            <p class="text-xs text-[#E3D5CA] lowercase">
+                                wähle ein kapitel im inhaltsverzeichnis oder nutze die volltextsuche nach stichworten.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Suchleiste & Themen-Filter -->
+                <div class="space-y-5">
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                        <div class="md:col-span-8 relative">
+                            <label for="catalog-search" class="sr-only">Thema oder Begriff suchen</label>
+                            <input 
+                                type="text" 
+                                id="catalog-search" 
+                                oninput="handleSearchAndFilter()"
+                                placeholder="suche nach thema, begriff, fischart, leitfaden oder schulung..." 
+                                class="w-full pl-11 pr-10 py-3.5 text-sm rounded bg-[#000000]"
+                            >
+                            <!-- Minimalistisches Lupen-SVG in Cream Beige -->
+                            <svg class="w-4 h-4 text-[#F5ECD7] absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                <circle cx="11" cy="11" r="7"></circle>
+                                <path d="M20 20L16 16" stroke-linecap="round"></path>
+                            </svg>
+                            <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-[#E3D5CA] hover:text-[#F5ECD7] uppercase tracking-widest">
+                                LÖSCHEN
+                            </button>
+                        </div>
+                        <div class="md:col-span-4 flex justify-start md:justify-end">
+                            <button onclick="openSequentialStart()" class="w-full md:w-auto sona-btn rounded py-3.5 px-5 text-center">
+                                RUNDGANG STARTEN (KAPITEL 01)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Kategorie-Filter -->
+                    <div class="flex flex-wrap items-center gap-2 pt-1" id="category-filters">
+                        <span class="sona-kicker mr-2">FILTER:</span>
+                        <button onclick="setCategoryFilter('ALLE')" data-cat="ALLE" class="cat-filter-btn sona-btn-filled rounded px-3.5 py-1.5 text-[11px]">ALLE</button>
+                        <button onclick="setCategoryFilter('LEITFADEN')" data-cat="LEITFADEN" class="cat-filter-btn sona-btn rounded px-3.5 py-1.5 text-[11px]">LEITFADEN</button>
+                        <button onclick="setCategoryFilter('WARENKUNDE')" data-cat="WARENKUNDE" class="cat-filter-btn sona-btn rounded px-3.5 py-1.5 text-[11px]">WARENKUNDE</button>
+                        <button onclick="setCategoryFilter('SCHULUNG')" data-cat="SCHULUNG" class="cat-filter-btn sona-btn rounded px-3.5 py-1.5 text-[11px]">SCHULUNG</button>
+                        <button onclick="setCategoryFilter('UMFRAGE')" data-cat="UMFRAGE" class="cat-filter-btn sona-btn rounded px-3.5 py-1.5 text-[11px]">UMFRAGE &amp; CHECK</button>
+                    </div>
+                </div>
+
+                <!-- 3. Admin-Werkzeugleiste (Nur im Admin-Modus sichtbar) -->
+                <div id="admin-toolbar-banner" class="hidden bg-[#191919] hairline-border p-6 rounded">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <div class="sona-kicker">VERWALTUNGS-MODUS AKTIV (TASTE.THE.PASSION)</div>
+                            <h2 class="font-audrey text-xl text-[#F5ECD7] mt-1">INHALTSVERZEICHNIS &amp; SEITEN VERWALTEN</h2>
+                            <p class="text-xs text-[#E3D5CA] lowercase mt-1">
+                                du kannst neue themenseiten anlegen, die reihenfolge im katalog ändern oder auf jeder themenseite neue abschnitte, tabellen, diagramme, bilder, links und umfragen ergänzen.
+                            </p>
+                        </div>
+                        <div class="flex flex-wrap gap-2.5 shrink-0">
+                            <button onclick="openTopicModal()" class="sona-btn-filled rounded px-4 py-2.5">
+                                + NEUES THEMA IM KATALOG
+                            </button>
+                            <button onclick="resetDefaultData()" class="sona-btn rounded px-4 py-2.5">
+                                STANDARD WIEDERHERSTELLEN
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Logisches Inhaltsverzeichnis (Aufgebaut wie Seite 02 & Seite 18 im Brandkit) -->
+                <div class="space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-end justify-between pb-4 hairline-b gap-2">
+                        <div>
+                            <div class="sona-kicker">INHALT &amp; DIREKTWAHL</div>
+                            <h2 class="font-audrey text-2xl sm:text-3xl text-[#F5ECD7] mt-1">INHALTSVERZEICHNIS</h2>
+                        </div>
+                        <span id="toc-count-label" class="sona-kicker tabular-nums">6 THEMENFELDER</span>
+                    </div>
+
+                    <!-- Tabellen-Liste des Inhaltsverzeichnisses -->
+                    <div id="toc-list" class="divide-y divide-[#F5ECD7]/20 hairline-t hairline-b">
+                        <!-- Wird per JavaScript gerendert -->
+                    </div>
+
+                    <!-- Themen-Karten-Raster (Ergänzende visuelle Modulübersicht) -->
+                    <div class="pt-10">
+                        <div class="sona-kicker mb-2">THEMENFELDER IM DETAIL</div>
+                        <h3 class="font-audrey text-xl sm:text-2xl text-[#F5ECD7] mb-6">LOGISCHER LERNPFAD</h3>
+                        <div id="topic-cards-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Wird per JavaScript gerendert -->
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- ======================================================================
+                 ANSICHT B: SEPARATE THEMENSEITE (EINZELSEITE PRO THEMENFELD)
+                 ====================================================================== -->
+            <section id="topic-view" class="hidden space-y-12">
+                <!-- Dynamischer Seiteninhalt wird per JavaScript gerendert -->
+            </section>
+
+        </main>
+
+        <!-- Fußzeile mit kleinem Enso-Logo & Claim -->
+        <footer class="bg-[#000000] hairline-t mt-20 px-4 sm:px-8 py-12">
+            <div class="max-w-6xl mx-auto flex flex-col items-center text-center space-y-6">
+                <!-- Zentriertes Logo ohne Zusatz am Fuß (gemäß Regel 7 auf Seite 18) -->
+                <svg viewBox="0 0 320 260" class="w-24 h-auto" aria-label="SONA Footer Logo">
+                    <path d="M 110 88 C 122 44, 174 20, 224 38 C 276 56, 302 115, 284 170 C 266 222, 206 248, 152 228 C 122 216, 102 192, 95 162" 
+                          fill="none" stroke="#F5ECD7" stroke-width="6.5" stroke-linecap="round" />
+                    <path d="M 103 184 C 118 212, 152 232, 192 233" 
+                          fill="none" stroke="#F5ECD7" stroke-width="1.3" stroke-linecap="round" />
+                    <text x="26" y="141" fill="#F5ECD7" font-family="'Cormorant Garamond', Georgia, serif" font-size="40" font-weight="400" letter-spacing="11">SONA</text>
+                </svg>
+                <div class="sona-claim">TASTE THE PASSION</div>
+                <div class="w-full max-w-2xl hairline-t pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-[#E3D5CA] gap-2">
+                    <span class="lowercase">sona lernhub — verbindliche interne wissensplattform</span>
+                    <span class="sona-kicker tabular-nums">STAND AUSGABE 01 — 2026</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ==========================================================================
+         3. MODAL: NEUES THEMA ANLEGEN / THEMA BEARBEITEN (ADMIN)
+         ========================================================================== -->
+    <div id="topic-modal" class="hidden fixed inset-0 z-50 bg-[#000000]/90 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-[#121212] hairline-border-strong w-full max-w-xl rounded p-6 sm:p-8 space-y-6 my-8">
+            <div class="flex justify-between items-start hairline-b pb-4">
+                <div>
+                    <div class="sona-kicker">KATALOG-VERWALTUNG</div>
+                    <h3 id="topic-modal-title" class="font-audrey text-2xl text-[#F5ECD7] mt-1">NEUES THEMA HINZUFÜGEN</h3>
+                </div>
+                <button onclick="closeTopicModal()" class="sona-kicker hover:text-[#F5ECD7]">SCHLIESSEN [X]</button>
+            </div>
+
+            <form id="topic-form" onsubmit="saveTopicFromModal(event)" class="space-y-4">
+                <input type="hidden" id="edit-topic-id">
+                
+                <div>
+                    <label class="block sona-kicker mb-2">THEMENTITEL (WIRD IN VERSALIEN GESETZT)</label>
+                    <input type="text" id="topic-input-title" placeholder="z. b. HYGIENE & HACCP LEITFADEN" class="w-full px-4 py-3 text-sm rounded" required>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block sona-kicker mb-2">KATEGORIE</label>
+                        <select id="topic-input-category" class="w-full px-4 py-3 text-sm rounded">
+                            <option value="LEITFADEN">LEITFADEN</option>
+                            <option value="WARENKUNDE">WARENKUNDE</option>
+                            <option value="SCHULUNG">SCHULUNG</option>
+                            <option value="UMFRAGE">UMFRAGE</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block sona-kicker mb-2">DAUER / UMFANG (TABELLARISCH)</label>
+                        <input type="text" id="topic-input-duration" placeholder="z. b. 15 min" class="w-full px-4 py-3 text-sm rounded" required>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block sona-kicker mb-2">KURZBESCHREIBUNG (KLEINGESCHRIEBEN IM KATALOG)</label>
+                    <textarea id="topic-input-summary" rows="2" placeholder="kurze erläuterung des themenfelds, ein gedanke je zeile" class="w-full px-4 py-3 text-sm rounded" required></textarea>
+                </div>
+
+                <div>
+                    <label class="block sona-kicker mb-2">ERSTER GRUNDLAGENTEXT AUF DER SEITE (OPTIONAL BEIM ANLEGEN)</label>
+                    <textarea id="topic-input-initialtext" rows="4" placeholder="text für den ersten abschnitt auf der neuen unterseite..." class="w-full px-4 py-3 text-sm rounded"></textarea>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-4 hairline-t">
+                    <button type="button" onclick="closeTopicModal()" class="sona-btn rounded">ABBRECHEN</button>
+                    <button type="submit" class="sona-btn-filled rounded">SPEICHERN</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         4. MODAL: INHALTSBLOCK AUF EINER THEMENSEITE HINZUFÜGEN (ADMIN)
+         ========================================================================== -->
+    <div id="block-modal" class="hidden fixed inset-0 z-50 bg-[#000000]/90 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-[#121212] hairline-border-strong w-full max-w-2xl rounded p-6 sm:p-8 space-y-6 my-8 max-h-[92vh] overflow-y-auto">
+            <div class="flex justify-between items-start hairline-b pb-4">
+                <div>
+                    <div class="sona-kicker">SEITEN-BAUKASTEN</div>
+                    <h3 class="font-audrey text-2xl text-[#F5ECD7] mt-1">INHALTSELEMENT HINZUFÜGEN</h3>
+                </div>
+                <button onclick="closeBlockModal()" class="sona-kicker hover:text-[#F5ECD7]">SCHLIESSEN [X]</button>
+            </div>
+
+            <form id="block-form" onsubmit="saveBlockFromModal(event)" class="space-y-4">
+                <div>
+                    <label class="block sona-kicker mb-2">ART DES INHALTS WÄHLEN</label>
+                    <select id="block-type-select" onchange="updateBlockFormFields()" class="w-full px-4 py-3 text-sm rounded">
+                        <option value="text">GRUNDLAGENTEXT &amp; ERLÄUTERUNG</option>
+                        <option value="table">TABELLE (DATEN, REIFUNG, STANDARDS)</option>
+                        <option value="diagram">DIAGRAMM / KENNZAHLEN-VISUALISIERUNG</option>
+                        <option value="image">VISUELLES ELEMENT / BILD MIT LEGENDE</option>
+                        <option value="links">WEITERFÜHRENDE LINKS &amp; DOKUMENTE</option>
+                        <option value="survey">INTERAKTIVE SCHULUNGSFRAGE / UMFRAGE</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block sona-kicker mb-2">ABSCHNITTSTITEL (VERSALIEN)</label>
+                    <input type="text" id="block-heading" placeholder="z. b. TEMPERATURKONTROLLE AM TRESEN" class="w-full px-4 py-3 text-sm rounded" required>
+                </div>
+
+                <div>
+                    <label class="block sona-kicker mb-2">UNTERTITEL / KURZERKLÄRUNG (KLEINGESCHRIEBEN)</label>
+                    <input type="text" id="block-subtext" placeholder="z. b. verbindliche richtwerte vor servicebeginn" class="w-full px-4 py-3 text-sm rounded">
+                </div>
+
+                <!-- Dynamische Felder je nach Typ -->
+                <div id="block-dynamic-fields" class="space-y-4 pt-2">
+                    <!-- Wird per JS befüllt -->
+                </div>
+
+                <div class="flex justify-end gap-3 pt-4 hairline-t">
+                    <button type="button" onclick="closeBlockModal()" class="sona-btn rounded">ABBRECHEN</button>
+                    <button type="submit" class="sona-btn-filled rounded">ELEMENT EINFÜGEN</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         5. MODAL: GOOGLE SITES EINBETTUNGS-ASSISTENT
+         ========================================================================== -->
+    <div id="gsites-modal" class="hidden fixed inset-0 z-50 bg-[#000000]/90 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-[#121212] hairline-border-strong w-full max-w-2xl rounded p-6 sm:p-8 space-y-6 my-8">
+            <div class="flex justify-between items-start hairline-b pb-4">
+                <div>
+                    <div class="sona-kicker">INTEGRATION</div>
+                    <h3 class="font-audrey text-2xl text-[#F5ECD7] mt-1">EINBINDUNG IN GOOGLE SITES</h3>
+                </div>
+                <button onclick="closeGoogleSitesGuide()" class="sona-kicker hover:text-[#F5ECD7]">SCHLIESSEN [X]</button>
+            </div>
+
+            <div class="space-y-4 text-sm text-[#E3D5CA] lowercase">
+                <p>
+                    so fügst du den kompletten interaktiven sona lernhub in deine google sites webseite ein:
+                </p>
+                <div class="bg-[#191919] hairline-border p-4 rounded space-y-2">
+                    <div class="sona-item-title">SCHRITT 01 — EINBETTEN WÄHLEN</div>
+                    <p>öffne dein projekt in google sites und klicke rechts im menü unter „einfügen“ auf die schaltfläche „einbetten“ (embed) und wechsle zum reiter „einbettungscode“.</p>
+                </div>
+                <div class="bg-[#191919] hairline-border p-4 rounded space-y-2">
+                    <div class="sona-item-title">SCHRITT 02 — CODE EINFÜGEN &amp; GANZE SEITE NUTZEN</div>
+                    <p>kopiere über den untenstehenden button den gesamten html-code dieser anwendung (inklusive deiner gespeicherten admin-änderungen) und füge ihn bei google sites ein. ziehe das eingebettete fenster auf die volle seitenbreite.</p>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap justify-between items-center gap-3 pt-4 hairline-t">
+                <span id="copy-feedback" class="sona-kicker text-[#F5ECD7]"></span>
+                <div class="flex gap-3">
+                    <button onclick="copyFullHtmlForGoogleSites()" class="sona-btn-filled rounded">
+                        VOLLSTÄNDIGEN HTML-CODE KOPIEREN
+                    </button>
+                    <button onclick="closeGoogleSitesGuide()" class="sona-btn rounded">
+                        SCHLIESSEN
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         JAVASCRIPT LOGIK & INITIALDATEN (GEMÄSS SONA BRANDKIT)
+         ========================================================================== -->
+    <script>
+        const STORAGE_KEY = 'sona_lernhub_catalog_v1';
+        const READ_KEY = 'sona_lernhub_read_v1';
+
+        // Zugangs-Codes laut Anforderung
+        const CODE_USER = 'Sona.lernen';
+        const CODE_ADMIN = 'taste.the.passion';
+
+        let currentRole = null; // 'user' oder 'admin'
+        let currentTopicId = null;
+        let activeCategory = 'ALLE';
+        let searchQuery = '';
+        let catalogData = [];
+        let readTopics = [];
+
+        // Initialer, logisch aufeinander aufbauender Katalog gemäß SONA Brandkit
+        const DEFAULT_CATALOG = [
+            {
+                id: 'topic-1',
+                category: 'LEITFADEN',
+                duration: '10 min',
+                title: 'DIE MARKE, WERTE & POSITIONIERUNG',
+                summary: 'shokunin, kanso, omotenashi und das verhältnis von küche, bar und raum',
+                blocks: [
+                    {
+                        id: 'b-101',
+                        type: 'text',
+                        heading: 'JAPANISCHE KÜCHE IN WARMEM LICHT',
+                        subtext: 'unsere grundhaltung mittags und abends',
+                        paragraphs: [
+                            'sona ist eine japanische sushi- und kitchen-bar. mittags schnell und präzise, abends langsam, persönlich und dunkel. im zentrum stehen der tresen und die offene küche: gäste sehen, wie geschnitten, flambiert und angerichtet wird.',
+                            'die karte verbindet klassisches sushi in dry-aged-qualität mit signature rolls, asiatischen klassikern und einer eigenständigen bar. diese mischung — handwerk plus bar-kultur — ist der kern der marke: japanisch in der präzision, urban in der haltung.',
+                            'qualität zeigt sich am teller, nicht am lautstärkeregler. wo andere häuser lauter werden, wird sona ruhiger.'
+                        ]
+                    },
+                    {
+                        id: 'b-102',
+                        type: 'table',
+                        heading: 'VIER MARKENWERTE — JEDER MIT FOLGEN',
+                        subtext: 'verbindlicher maßstab für küche, service und gestaltung',
+                        headers: ['WERT', 'JAPANISCHES PRINZIP', 'BEDEUTUNG IM ALLTAG'],
+                        rows: [
+                            ['PRÄZISION', 'shokunin', 'jeder schnitt ist geübt, jede reifung dokumentiert. exakte ränder, gleiche abstände, kein element ungefähr.'],
+                            ['REDUKTION', 'kanso', 'weglassen, bis nur das notwendige bleibt. ein motiv je fläche, ein gedanke je zeile, keine unnötige dekoration.'],
+                            ['WÄRME', 'omotenashi', 'gastfreundschaft ohne aufhebens. man wird erwartet, nicht abgefertigt. warme lichtführung und ruhige sprache.'],
+                            ['LEIDENSCHAFT', 'taste the passion', 'jedes gericht, jedes foto und jeder tisch muss erkennen lassen, dass jemand sich mühe gegeben hat.']
+                        ]
+                    },
+                    {
+                        id: 'b-103',
+                        type: 'diagram',
+                        heading: 'FARBWELT & RAUMWIRKUNG',
+                        subtext: 'verteilung der markenfarben in digitalen und räumlichen medien',
+                        metrics: [
+                            { label: 'SCHWARZ & CHARCOAL (#000000 / #121212)', value: 62, unit: '62 %' },
+                            { label: 'CREAM BEIGE (#F5ECD7 — SCHRIFT & LINIE)', value: 30, unit: '30 %' },
+                            { label: 'SILK BEIGE (#E3D5CA — ZWEITFLÄCHE)', value: 8, unit: '8 %' }
+                        ]
+                    },
+                    {
+                        id: 'b-104',
+                        type: 'links',
+                        heading: 'WEITERFÜHRENDE UNTERLAGEN',
+                        subtext: 'direktlinks zum markenordner und vorlagen',
+                        links: [
+                            { label: 'MARKENORDNER — ORIGINALDATEIEN (LOGOS SVG, EPS, PNG)', url: 'https://drive.google.com', note: 'niemals screenshots oder nachzeichnungen verwenden' },
+                            { label: 'SCHRIFTLIZENZEN — AUDREY & NEUE HAAS DISPLAY', url: 'https://drive.google.com', note: 'freigabe über die marketingleitung' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'topic-2',
+                category: 'LEITFADEN',
+                duration: '12 min',
+                title: 'SPRACHE, TONALITÄT & SPEISEKARTEN',
+                summary: 'wie sona schreibt, gerichte benennt und karten setzt',
+                blocks: [
+                    {
+                        id: 'b-201',
+                        type: 'text',
+                        heading: 'ZUTATEN STATT ADJEKTIVE',
+                        subtext: 'klare sprache ohne werbefloskeln',
+                        paragraphs: [
+                            'wir benennen, was im gericht ist, und lassen die qualität für sich sprechen. wir nutzen keine superlative, kein „einzigartig“ und keine ausrufezeichen.',
+                            'originalnamen bleiben japanisch stehen — maguro, tataki, gyoza. die erklärung folgt darunter in kleinerem grad auf deutsch und wird durchgehend klein geschrieben.',
+                            'im haus und auf social media verwenden wir das „du“. in presse-, bewerbungs- und geschäftstexten das „sie“. innerhalb eines mediums wird nie gemischt.'
+                        ]
+                    },
+                    {
+                        id: 'b-202',
+                        type: 'table',
+                        heading: 'GEGENÜBERSTELLUNG: SO SCHREIBEN WIR',
+                        subtext: 'verbindliche satzregeln für speisekarten, tafeln und social media',
+                        headers: ['ELEMENT', 'RICHTIG BEI SONA', 'NICHT ERLAUBT'],
+                        rows: [
+                            ['GERICHTBESCHREIBUNG', 'maguro, bluefin thunfisch, dry aged', 'Das beste Sushi der Stadt — unglaublich frisch'],
+                            ['TAGESEMPFEHLUNG', 'heute am tresen: aji, ikura, hamachi', 'Sushi-Träume werden wahr'],
+                            ['RESERVIERUNG', 'reserviere einen platz an der bar', 'Jetzt Tisch sichern & sparen'],
+                            ['PREISANGABE', '24 / 7.50 / 36 (ohne währungszeichen)', '24,00 € / nur 7,50 EUR']
+                        ]
+                    },
+                    {
+                        id: 'b-203',
+                        type: 'image',
+                        heading: 'MUSTER-AUFBAU EINER SPEISEKARTENSEITE',
+                        subtext: 'abendkarte auf schwarz, mittagskarte auf cremebeige für tageslicht',
+                        imageUrl: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=1200&q=80',
+                        caption: 'kopfzeile mit claim in 0,42 em sperrung, gruppentitel zentriert in versalien, haarlinie zwischen den positionen, preise rechts tabellarisch ohne währungszeichen.'
+                    }
+                ]
+            },
+            {
+                id: 'topic-3',
+                category: 'WARENKUNDE',
+                duration: '20 min',
+                title: 'WARENKUNDE: DRY-AGED FISCH & SCHNITT',
+                summary: 'reifung, temperaturführung und präziser zuschnitt am sushi-tresen',
+                blocks: [
+                    {
+                        id: 'b-301',
+                        type: 'text',
+                        heading: 'DRY AGING IN DER SUSHI-KÜCHE',
+                        subtext: 'dokumentierte reifung für konzentrierten umami-geschmack',
+                        paragraphs: [
+                            'durch kontrollierte trockene reifung verliert der fisch überschüssige feuchtigkeit, während körpereigene enzyme die Proteinstruktur zart machen und das umami-profil vertiefen.',
+                            'jede reifung wird mit eingangsdatum, fischart, charge und ziel-reifegrad im reifeschrank dokumentiert. jeder schnitt am tresen folgt der faserstruktur des jeweiligen teilstücks.'
+                        ]
+                    },
+                    {
+                        id: 'b-302',
+                        type: 'table',
+                        heading: 'REIFETABELLE & SCHNITTSTANDARDS',
+                        subtext: 'richtwerte für unsere hauptfischarten am tresen',
+                        headers: ['JAPANISCHER NAME', 'DEUTSCHE BEZEICHNUNG', 'REIFEDAUER (DRY AGED)', 'SERVIERTEMPERATUR'],
+                        rows: [
+                            ['MAGURO (AKAMI / OTORO)', 'bluefin thunfisch', '10 bis 14 tage', '14 bis 16 grad'],
+                            ['HAMACHI', 'gelbschwanzmakrele', '5 bis 7 tage', '13 bis 15 grad'],
+                            ['SAKE', 'atlantik-lachs in sashimi-qualität', '3 bis 5 tage', '12 bis 14 grad'],
+                            ['AJI', 'japanische stöcker-makrele', '2 bis 3 tage', '12 bis 14 grad']
+                        ]
+                    },
+                    {
+                        id: 'b-303',
+                        type: 'diagram',
+                        heading: 'QUALITÄTS- & HYGIENEPARAMETER IM REIFESCHRANK',
+                        subtext: 'tägliche kontrollwerte vor der mittags- und abendschicht',
+                        metrics: [
+                            { label: 'RELATIVE LUFTFEUCHTIGKEIT IM REIFESCHRANK', value: 82, unit: '82 %' },
+                            { label: 'KERNTEMPERATUR KÜHLUNG (0,5 BIS 1,5 GRAD)', value: 95, unit: '1.0 °C' },
+                            { label: 'SHARI (SUSHI-REIS) SERVIERTEMPERATUR', value: 74, unit: '36 °C' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'topic-4',
+                category: 'SCHULUNG',
+                duration: '15 min',
+                title: 'SERVICE-LEITFADEN: MITTAG, ABEND & TO-GO',
+                summary: 'ablaufstandards für die 45-minuten-mittagspause, das abendgeschäft und verpackung',
+                blocks: [
+                    {
+                        id: 'b-401',
+                        type: 'text',
+                        heading: 'ZWEI ZEITEN, EINE PRÄZISION',
+                        subtext: 'anpassung der geschwindigkeit an den anlass des gastes',
+                        paragraphs: [
+                            'mittags besuchen uns berufstätige aus der umgebung mit rund 45 minuten zeit. sie erwarten gutes essen ohne warten, klare preise und zügige aufmerksamkeit.',
+                            'abends kommen paare und freundeskreise für signature menüs, cocktails und atmosphäre. das licht wird auf warmweiße 2700 kelvin gedimmt, die beratung am tisch und an der bar wird ausführlicher.',
+                            'bei to-go-bestellungen ist die verpackung das einzige markenerlebnis zu hause — sie muss so sorgfältig übergeben werden wie ein teller im raum.'
+                        ]
+                    },
+                    {
+                        id: 'b-402',
+                        type: 'table',
+                        heading: 'SERVICE- & VERPACKUNGSREGELN',
+                        subtext: 'verbindlicher ablauf für service und ausgabe',
+                        headers: ['BEREICH', 'VORGABE', 'KONTROLLPUNKT'],
+                        rows: [
+                            ['UNIFORM SERVICE', 'schwarzes hemd (lange ärmel), schwarze hose, logo gestickt links', 'keine mützen oder farbige drucke'],
+                            ['UNIFORM KÜCHE & TRESEN', 'dunkle schürze in leinenoptik, logo klein auf brusttasche', 'sauberer sitz vor öffnung'],
+                            ['TO-GO TÜTEN & BOXEN', 'kraftpapier cremebeige, unbeschichteter karton mit schwarzer banderole', 'fremde liefer-sticker nur auf die rückseite'],
+                            ['BEILAGEN TO-GO', 'stäbchenhülle, serviette und kärtchen tragen je nur ein element', 'nie logo, claim und adresse zusammen auf einem teil']
+                        ]
+                    },
+                    {
+                        id: 'b-403',
+                        type: 'links',
+                        heading: 'DIENSTPLÄNE & CHECKLISTEN',
+                        subtext: 'interne dokumente für den täglichen ablauf',
+                        links: [
+                            { label: 'OPENING & CLOSING CHECKLISTE (SERVICE & BAR)', url: 'https://docs.google.com', note: 'täglich vor schichtbeginn abzeichnen' },
+                            { label: 'ALLERGEN-LEGENDE (ZIFFERNVERZEICHNIS FÜR KARTEN)', url: 'https://docs.google.com', note: 'aktuelle fassung am tresen bereithalten' }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'topic-5',
+                category: 'SCHULUNG',
+                duration: '10 min',
+                title: 'RAUM, LICHT, BESCHILDERUNG & SOCIAL MEDIA',
+                summary: 'regeln für lichtstimmung, aufsteller-tafeln und bildsprache im netz',
+                blocks: [
+                    {
+                        id: 'b-501',
+                        type: 'text',
+                        heading: 'DER RAUM IST DER MASSSTAB',
+                        subtext: 'warmes licht, dunkle flächen, ruhige tische',
+                        paragraphs: [
+                            'alle leuchtelemente im lokal sind warmweiß mit maximal 2700 kelvin und dimmbar. kaltes weiß, rgb-beleuchtung oder lauflichter sind ausgeschlossen.',
+                            'handgeschriebene zettel und klebeband an türen, tresen oder spiegeln sind nicht erlaubt. hinweise für öffnungszeiten, reservierung und wlan kommen ausschließlich aus den vorlagen im markenordner.',
+                            'für fotografien gilt: ein warmes licht von der seite oder von oben, tiefe schwarzwerte, kein blitz. das bild darf nie bunter sein als das essen darin.'
+                        ]
+                    },
+                    {
+                        id: 'b-502',
+                        type: 'image',
+                        heading: 'BILDSPRACHE & ATMOSPHÄRE',
+                        subtext: 'punktuelles licht, dunkle tiefe, fokus auf handwerk und teller',
+                        imageUrl: 'https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=1200&q=80',
+                        caption: 'motive: teller von oben oder in 45 grad, hände bei der arbeit, bar im betrieb. gäste nur unscharf im hintergrund.'
+                    }
+                ]
+            },
+            {
+                id: 'topic-6',
+                category: 'UMFRAGE',
+                duration: '08 min',
+                title: 'WISSENS-CHECK & TEAM-FEEDBACK',
+                summary: 'interaktive lernkontrolle zu den sona-standards und rückmeldung aus dem team',
+                blocks: [
+                    {
+                        id: 'b-601',
+                        type: 'text',
+                        heading: 'ÜBERPRÜFUNG DER GRUNDLAGEN',
+                        subtext: 'bitte beantworte die folgenden fragen direkt auf dieser seite',
+                        paragraphs: [
+                            'dieser selbsttest dient dazu, die wichtigsten regeln aus dem sona lernhub zu festigen. deine eingaben werden sofort ausgewertet.'
+                        ]
+                    },
+                    {
+                        id: 'b-602',
+                        type: 'survey',
+                        heading: 'FRAGE 01 — PREISDARSTELLUNG & TONALITÄT',
+                        subtext: 'wähle die richtige schreibweise für unsere abendkarte',
+                        question: 'wie werden gerichtbeschreibungen und preise auf einer sona-speisekarte korrekt gesetzt?',
+                        options: [
+                            'gerichtbeschreibung durchgehend klein, preis tabellarisch ohne währungszeichen (z. b. 24)',
+                            'beschreibung mit großbuchstaben und ausrufezeichen, preis in rot mit euro-zeichen (24,00 €)',
+                            'kompletter text in kursiver schrift mit emojis zur kennzeichnung veganer gerichte'
+                        ],
+                        correctIndex: 0
+                    },
+                    {
+                        id: 'b-603',
+                        type: 'survey',
+                        heading: 'FRAGE 02 — LOGO & SCHUTZRAUM',
+                        subtext: 'umgang mit dem offenen enso-pinselkreis',
+                        question: 'welche regel gilt verbindlich für den offenen enso-pinselkreis unseres logos?',
+                        options: [
+                            'der kreis darf für sticker geschlossen oder golden eingefärbt werden',
+                            'der offene pinselkreis wird nie geschlossen, verzerrt oder umgefärbt; rundum bleibt 1/4 kreisdurchmesser frei',
+                            'das logo darf mit einem schlagschatten auf helle fotos gelegt werden'
+                        ],
+                        correctIndex: 1
+                    },
+                    {
+                        id: 'b-604',
+                        type: 'survey',
+                        heading: 'FRAGE 03 — FEEDBACK & THEMENWÜNSCHE',
+                        subtext: 'interne umfrage zur weiterentwicklung des lernhubs',
+                        question: 'welches schulungsthema soll als nächstes vertieft im sona lernhub ausgebaut werden?',
+                        options: [
+                            'signature cocktails & bar-rezepturen im abendservice',
+                            'sake-begleitung & empfehlungen am tisch',
+                            'schneidetechnik & messerpflege am tresen',
+                            'onboarding-leitfaden für neue teammitglieder'
+                        ],
+                        correctIndex: -1 // Offene Umfrage ohne Richtig/Falsch
+                    }
+                ]
+            }
+        ];
+
+        // ==========================================================================
+        // INITIALISIERUNG & SPEICHERVERWALTUNG
+        // ==========================================================================
+        function initData() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    catalogData = JSON.parse(saved);
+                } else {
+                    catalogData = JSON.parse(JSON.stringify(DEFAULT_CATALOG));
+                    saveCatalog();
+                }
+
+                const savedRead = localStorage.getItem(READ_KEY);
+                if (savedRead) {
+                    readTopics = JSON.parse(savedRead);
+                }
+            } catch (e) {
+                catalogData = JSON.parse(JSON.stringify(DEFAULT_CATALOG));
+                readTopics = [];
+            }
+        }
+
+        function saveCatalog() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(catalogData));
+            } catch (e) {
+                console.error('Speicherfehler:', e);
+            }
+        }
+
+        function markTopicAsRead(topicId) {
+            if (!readTopics.includes(topicId)) {
+                readTopics.push(topicId);
+                try {
+                    localStorage.setItem(READ_KEY, JSON.stringify(readTopics));
+                } catch (e) {}
+            }
+            updateStats();
+        }
+
+        function padNum(num) {
+            return String(num).padStart(2, '0');
+        }
+
+        // ==========================================================================
+        // AUTHENTIFIZIERUNG (Sona.lernen & taste.the.passion)
+        // ==========================================================================
+        function handleLogin(e) {
+            e.preventDefault();
+            const input = document.getElementById('access-code').value.trim();
+            authenticateWithCode(input);
+        }
+
+        function quickLogin(code) {
+            document.getElementById('access-code').value = code;
+            authenticateWithCode(code);
+        }
+
+        function authenticateWithCode(code) {
+            const errorEl = document.getElementById('login-error');
+            if (code.toLowerCase() === CODE_USER.toLowerCase()) {
+                currentRole = 'user';
+                errorEl.classList.add('hidden');
+                enterApp();
+            } else if (code.toLowerCase() === CODE_ADMIN.toLowerCase()) {
+                currentRole = 'admin';
+                errorEl.classList.add('hidden');
+                enterApp();
+            } else {
+                errorEl.classList.remove('hidden');
+            }
+        }
+
+        function enterApp() {
+            document.getElementById('login-view').classList.add('hidden');
+            const appShell = document.getElementById('app-shell');
+            appShell.classList.remove('hidden');
+            appShell.classList.add('flex');
+            updateRoleUI();
+            navigateToHome();
+        }
+
+        function logout() {
+            currentRole = null;
+            document.getElementById('access-code').value = '';
+            document.getElementById('app-shell').classList.add('hidden');
+            document.getElementById('app-shell').classList.remove('flex');
+            document.getElementById('login-view').classList.remove('hidden');
+        }
+
+        function toggleRoleQuick() {
+            currentRole = currentRole === 'admin' ? 'user' : 'admin';
+            updateRoleUI();
+            if (currentTopicId) {
+                renderTopicPage(currentTopicId);
+            } else {
+                renderCatalog();
+            }
+        }
+
+        function updateRoleUI() {
+            const roleIndicator = document.getElementById('role-indicator');
+            const switchBtn = document.getElementById('switch-role-btn');
+            const adminNewBtn = document.getElementById('admin-new-topic-btn');
+            const adminBanner = document.getElementById('admin-toolbar-banner');
+
+            if (currentRole === 'admin') {
+                roleIndicator.textContent = 'MODUS: ADMIN (TASTE.THE.PASSION)';
+                switchBtn.textContent = 'ZU MITARBEITER-ANSICHT WECHSELN';
+                adminNewBtn.classList.remove('hidden');
+                adminBanner.classList.remove('hidden');
+            } else {
+                roleIndicator.textContent = 'MODUS: MITARBEITER (SONA.LERNEN)';
+                switchBtn.textContent = 'ZU ADMIN-MODUS WECHSELN';
+                adminNewBtn.classList.add('hidden');
+                adminBanner.classList.add('hidden');
+            }
+        }
+
+        // ==========================================================================
+        // NAVIGATION & SUCHE / FILTER
+        // ==========================================================================
+        function navigateToHome() {
+            currentTopicId = null;
+            document.getElementById('topic-view').classList.add('hidden');
+            document.getElementById('landing-view').classList.remove('hidden');
+            renderCatalog();
+            updateStats();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openTopic(topicId) {
+            currentTopicId = topicId;
+            markTopicAsRead(topicId);
+            document.getElementById('landing-view').classList.add('hidden');
+            document.getElementById('topic-view').classList.remove('hidden');
+            renderTopicPage(topicId);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openSequentialStart() {
+            if (catalogData.length > 0) {
+                openTopic(catalogData[0].id);
+            }
+        }
+
+        function setCategoryFilter(cat) {
+            activeCategory = cat;
+            document.querySelectorAll('.cat-filter-btn').forEach(btn => {
+                if (btn.dataset.cat === cat) {
+                    btn.className = 'cat-filter-btn sona-btn-filled rounded px-3.5 py-1.5 text-[11px]';
+                } else {
+                    btn.className = 'cat-filter-btn sona-btn rounded px-3.5 py-1.5 text-[11px]';
+                }
+            });
+            renderCatalog();
+        }
+
+        function handleSearchAndFilter() {
+            const input = document.getElementById('catalog-search');
+            searchQuery = input.value.trim().toLowerCase();
+            const clearBtn = document.getElementById('clear-search-btn');
+            if (searchQuery.length > 0) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+            renderCatalog();
+        }
+
+        function clearSearch() {
+            document.getElementById('catalog-search').value = '';
+            searchQuery = '';
+            document.getElementById('clear-search-btn').classList.add('hidden');
+            renderCatalog();
+        }
+
+        function updateStats() {
+            const totalEl = document.getElementById('stat-total-topics');
+            const readEl = document.getElementById('stat-read-topics');
+            const total = catalogData.length;
+            const validReadCount = catalogData.filter(t => readTopics.includes(t.id)).length;
+            totalEl.textContent = `${padNum(total)} MODULE`;
+            readEl.textContent = `${validReadCount} / ${total} GELESEN`;
+        }
+
+        // ==========================================================================
+        // RENDERING: INHALTSVERZEICHNIS & KATALOG
+        // ==========================================================================
+        function getFilteredCatalog() {
+            return catalogData.filter((topic, idx) => {
+                const matchesCat = activeCategory === 'ALLE' || topic.category === activeCategory;
+                if (!matchesCat) return false;
+                if (!searchQuery) return true;
+
+                // Volltextsuche über Titel, Zusammenfassung, Kategorie und alle Inhaltsblöcke
+                const blockText = (topic.blocks || []).map(b => {
+                    return [
+                        b.heading || '',
+                        b.subtext || '',
+                        (b.paragraphs || []).join(' '),
+                        (b.rows || []).map(r => r.join(' ')).join(' '),
+                        b.question || '',
+                        b.caption || ''
+                    ].join(' ');
+                }).join(' ').toLowerCase();
+
+                return (
+                    topic.title.toLowerCase().includes(searchQuery) ||
+                    topic.summary.toLowerCase().includes(searchQuery) ||
+                    topic.category.toLowerCase().includes(searchQuery) ||
+                    blockText.includes(searchQuery)
+                );
+            });
+        }
+
+        function renderCatalog() {
+            const filtered = getFilteredCatalog();
+            const tocList = document.getElementById('toc-list');
+            const grid = document.getElementById('topic-cards-grid');
+            const countLabel = document.getElementById('toc-count-label');
+
+            countLabel.textContent = `${filtered.length} ${filtered.length === 1 ? 'THEMENFELD' : 'THEMENFELDER'}`;
+
+            if (filtered.length === 0) {
+                tocList.innerHTML = `
+                    <div class="py-12 text-center">
+                        <div class="sona-kicker">KEINE TREFFER</div>
+                        <p class="text-sm text-[#E3D5CA] mt-2 lowercase">für deine aktuelle suche wurden keine themen gefunden. bitte suchbegriff oder filter zurücksetzen.</p>
+                    </div>
+                `;
+                grid.innerHTML = '';
+                return;
+            }
+
+            // 1. Klassisches SONA Inhaltsverzeichnis (Tabellarisch wie Seite 02 im Brandkit)
+            tocList.innerHTML = filtered.map((topic) => {
+                const realIndex = catalogData.findIndex(t => t.id === topic.id);
+                const numStr = padNum(realIndex + 1);
+                const isRead = readTopics.includes(topic.id);
+
+                return `
+                    <div class="py-4 sm:py-5 px-2 hover:bg-[#191919] transition flex flex-col md:flex-row md:items-center justify-between gap-4 group">
+                        <div onclick="openTopic('${topic.id}')" class="flex items-baseline gap-4 sm:gap-8 cursor-pointer flex-grow">
+                            <span class="tabular-nums font-audrey text-xl sm:text-2xl text-[#E3D5CA] w-8 shrink-0">${numStr}</span>
+                            <div class="space-y-1">
+                                <div class="flex flex-wrap items-center gap-3">
+                                    <span class="sona-item-title group-hover:underline underline-offset-4">${escapeHtml(topic.title)}</span>
+                                    <span class="sona-kicker px-2 py-0.5 bg-[#000000] hairline-border rounded">[ ${escapeHtml(topic.category)} ]</span>
+                                    ${isRead ? `<span class="sona-kicker text-[#F5ECD7]">[ GELESEN ]</span>` : ''}
+                                </div>
+                                <p class="text-xs sm:text-sm text-[#E3D5CA] lowercase">${escapeHtml(topic.summary)}</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between md:justify-end gap-4 shrink-0 pl-12 md:pl-0">
+                            <span class="tabular-nums text-xs text-[#E3D5CA]">${escapeHtml(topic.duration)}</span>
+                            ${currentRole === 'admin' ? `
+                                <div class="flex items-center gap-1.5">
+                                    <button onclick="moveTopic(${realIndex}, -1)" class="px-2 py-1 text-xs hairline-border rounded hover:bg-[#F5ECD7] hover:text-[#000000]" title="Nach oben">↑</button>
+                                    <button onclick="moveTopic(${realIndex}, 1)" class="px-2 py-1 text-xs hairline-border rounded hover:bg-[#F5ECD7] hover:text-[#000000]" title="Nach unten">↓</button>
+                                    <button onclick="openTopicModal('${topic.id}')" class="px-2.5 py-1 text-[11px] uppercase tracking-wider hairline-border rounded hover:bg-[#F5ECD7] hover:text-[#000000]">EDIT</button>
+                                    <button onclick="deleteTopic('${topic.id}')" class="px-2.5 py-1 text-[11px] uppercase tracking-wider hairline-border rounded hover:bg-[#F5ECD7] hover:text-[#000000]">LÖSCHEN</button>
+                                </div>
+                            ` : `
+                                <button onclick="openTopic('${topic.id}')" class="sona-kicker group-hover:text-[#F5ECD7] flex items-center gap-1">
+                                    SEITE ÖFFNEN <span>→</span>
+                                </button>
+                            `}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // 2. Detail-Karten im Katalog-Raster
+            grid.innerHTML = filtered.map((topic) => {
+                const realIndex = catalogData.findIndex(t => t.id === topic.id);
+                const numStr = padNum(realIndex + 1);
+                const blockCount = (topic.blocks || []).length;
+
+                return `
+                    <article onclick="openTopic('${topic.id}')" class="bg-[#191919] hairline-border hover:border-[#F5ECD7] transition p-6 sm:p-8 rounded flex flex-col justify-between cursor-pointer">
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center hairline-b pb-3">
+                                <span class="sona-kicker">KAPITEL ${numStr} — ${escapeHtml(topic.category)}</span>
+                                <span class="tabular-nums text-xs text-[#E3D5CA]">${blockCount} ABSCHNITTE</span>
+                            </div>
+                            <h4 class="font-audrey text-xl sm:text-2xl text-[#F5ECD7] leading-snug">
+                                ${escapeHtml(topic.title)}
+                            </h4>
+                            <p class="text-sm text-[#E3D5CA] lowercase">
+                                ${escapeHtml(topic.summary)}
+                            </p>
+                        </div>
+                        <div class="pt-6 mt-6 hairline-t flex justify-between items-center">
+                            <span class="tabular-nums text-xs text-[#E3D5CA]">lesezeit ca. ${escapeHtml(topic.duration)}</span>
+                            <span class="sona-kicker text-[#F5ECD7]">ZUR THEMENSEITE →</span>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        // ==========================================================================
+        // RENDERING: SEPARATE UNTERSEITE PRO THEMENFELD
+        // ==========================================================================
+        function renderTopicPage(topicId) {
+            const topicIndex = catalogData.findIndex(t => t.id === topicId);
+            if (topicIndex === -1) {
+                navigateToHome();
+                return;
+            }
+
+            const topic = catalogData[topicIndex];
+            const numStr = padNum(topicIndex + 1);
+            const prevTopic = topicIndex > 0 ? catalogData[topicIndex - 1] : null;
+            const nextTopic = topicIndex < catalogData.length - 1 ? catalogData[topicIndex + 1] : null;
+
+            const container = document.getElementById('topic-view');
+
+            const blocksHtml = (topic.blocks || []).map((block, bIdx) => {
+                return renderContentBlock(topic.id, block, bIdx);
+            }).join('');
+
+            container.innerHTML = `
+                <!-- Breadcrumb & Rücksprung zum Inhaltsverzeichnis -->
+                <div class="flex flex-wrap justify-between items-center gap-4 pb-6 hairline-b">
+                    <div class="flex items-center gap-3">
+                        <button onclick="navigateToHome()" class="sona-kicker hover:text-[#F5ECD7] flex items-center gap-2">
+                            <span>←</span> ZURÜCK ZUM INHALTSVERZEICHNIS
+                        </button>
+                        <span class="text-[#E3D5CA]/40">/</span>
+                        <span class="sona-kicker text-[#F5ECD7] tabular-nums">KAPITEL ${numStr}</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="sona-kicker px-2.5 py-1 bg-[#191919] hairline-border rounded">[ ${escapeHtml(topic.category)} ]</span>
+                        <span class="tabular-nums text-xs text-[#E3D5CA]">${escapeHtml(topic.duration)}</span>
+                    </div>
+                </div>
+
+                <!-- Seitenkopf des Themas -->
+                <div class="space-y-4 pb-10 hairline-b">
+                    <div class="sona-kicker tabular-nums">KAPITEL ${numStr} VON ${padNum(catalogData.length)}</div>
+                    <h1 class="font-audrey text-3xl sm:text-5xl text-[#F5ECD7] leading-tight">
+                        ${escapeHtml(topic.title)}
+                    </h1>
+                    <p class="text-base sm:text-lg text-[#E3D5CA] lowercase sona-prose">
+                        ${escapeHtml(topic.summary)}
+                    </p>
+
+                    ${currentRole === 'admin' ? `
+                        <div class="pt-4 flex flex-wrap gap-3">
+                            <button onclick="openBlockModal()" class="sona-btn-filled rounded">
+                                + INHALTSBLOCK HINZUFÜGEN (TEXT, TABELLE, DIAGRAMM, BILD, LINK, UMFRAGE)
+                            </button>
+                            <button onclick="openTopicModal('${topic.id}')" class="sona-btn rounded">
+                                SEITENTITEL BEARBEITEN
+                            </button>
+                        </div>
+                    ` : ''}
+                </div>
+
+                <!-- Alle Inhaltsblöcke dieser Themenseite -->
+                <div class="space-y-14">
+                    ${blocksHtml || `
+                        <div class="p-8 bg-[#191919] hairline-border rounded text-center">
+                            <div class="sona-kicker">KEINE INHALTE</div>
+                            <p class="text-sm text-[#E3D5CA] lowercase mt-2">dieses themenfeld enthält aktuell noch keine abschnitte.</p>
+                        </div>
+                    `}
+                </div>
+
+                <!-- Logische Vor-/Zurück-Navigation durch den gesamten Katalog -->
+                <div class="pt-12 hairline-t grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    ${prevTopic ? `
+                        <button onclick="openTopic('${prevTopic.id}')" class="p-6 bg-[#191919] hover:bg-[#000000] hairline-border rounded text-left transition">
+                            <div class="sona-kicker tabular-nums">← VORHERIGES KAPITEL (${padNum(topicIndex)})</div>
+                            <div class="font-audrey text-lg text-[#F5ECD7] mt-1">${escapeHtml(prevTopic.title)}</div>
+                        </button>
+                    ` : `
+                        <button onclick="navigateToHome()" class="p-6 bg-[#191919] hover:bg-[#000000] hairline-border rounded text-left transition">
+                            <div class="sona-kicker">← ÜBERSICHT</div>
+                            <div class="font-audrey text-lg text-[#F5ECD7] mt-1">ZURÜCK ZUM INHALTSVERZEICHNIS</div>
+                        </button>
+                    `}
+
+                    ${nextTopic ? `
+                        <button onclick="openTopic('${nextTopic.id}')" class="p-6 bg-[#191919] hover:bg-[#000000] hairline-border rounded text-right transition">
+                            <div class="sona-kicker tabular-nums">NÄCHSTES KAPITEL (${padNum(topicIndex + 2)}) →</div>
+                            <div class="font-audrey text-lg text-[#F5ECD7] mt-1">${escapeHtml(nextTopic.title)}</div>
+                        </button>
+                    ` : `
+                        <button onclick="navigateToHome()" class="p-6 bg-[#191919] hover:bg-[#000000] hairline-border rounded text-right transition">
+                            <div class="sona-kicker">KATALOG ABGESCHLOSSEN →</div>
+                            <div class="font-audrey text-lg text-[#F5ECD7] mt-1">ZURÜCK ZUR STARTSEITE</div>
+                        </button>
+                    `}
+                </div>
+            `;
+        }
+
+        function renderContentBlock(topicId, block, bIdx) {
+            const adminControls = currentRole === 'admin' ? `
+                <div class="flex items-center gap-2">
+                    <button onclick="deleteBlock('${topicId}', '${block.id}')" class="px-2.5 py-1 text-[10px] uppercase tracking-widest hairline-border rounded hover:bg-[#F5ECD7] hover:text-[#000000]">
+                        ABSCHNITT LÖSCHEN
+                    </button>
+                </div>
+            ` : '';
+
+            const headerHtml = `
+                <div class="flex flex-wrap justify-between items-start gap-2 mb-5">
+                    <div>
+                        <div class="sona-kicker tabular-nums">ABSCHNITT ${padNum(bIdx + 1)}</div>
+                        <h2 class="font-audrey text-2xl text-[#F5ECD7] mt-1">${escapeHtml(block.heading || '')}</h2>
+                        ${block.subtext ? `<p class="text-xs text-[#E3D5CA] lowercase mt-0.5">${escapeHtml(block.subtext)}</p>` : ''}
+                    </div>
+                    ${adminControls}
+                </div>
+            `;
+
+            // 1. GRUNDLAGENTEXT
+            if (block.type === 'text') {
+                const paras = (block.paragraphs || []).map(p => `<p class="text-sm sm:text-base text-[#F5ECD7] sona-prose leading-relaxed">${escapeHtml(p)}</p>`).join('');
+                return `
+                    <div class="bg-[#191919] hairline-border p-6 sm:p-10 rounded">
+                        ${headerHtml}
+                        <div class="space-y-4 hairline-t pt-5">
+                            ${paras}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // 2. TABELLE
+            if (block.type === 'table') {
+                const ths = (block.headers || []).map(h => `<th class="py-3 px-4 text-left sona-item-title text-xs">${escapeHtml(h)}</th>`).join('');
+                const trs = (block.rows || []).map(row => `
+                    <tr class="hairline-t hover:bg-[#121212] transition">
+                        ${row.map((cell, cIdx) => `
+                            <td class="py-3.5 px-4 text-xs sm:text-sm ${cIdx === 0 ? 'sona-item-title text-xs' : 'text-[#E3D5CA] lowercase tabular-nums'}">${escapeHtml(cell)}</td>
+                        `).join('')}
+                    </tr>
+                `).join('');
+
+                return `
+                    <div class="bg-[#191919] hairline-border p-6 sm:p-10 rounded">
+                        ${headerHtml}
+                        <div class="overflow-x-auto hairline-t pt-2">
+                            <table class="w-full border-collapse">
+                                <thead>
+                                    <tr class="bg-[#000000] hairline-b">${ths}</tr>
+                                </thead>
+                                <tbody>${trs}</tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // 3. DIAGRAMM / KENNZAHLEN
+            if (block.type === 'diagram') {
+                const bars = (block.metrics || []).map(m => {
+                    const pct = Math.max(5, Math.min(100, Number(m.value) || 50));
+                    return `
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-baseline text-xs">
+                                <span class="sona-item-title text-xs">${escapeHtml(m.label)}</span>
+                                <span class="tabular-nums font-medium text-[#F5ECD7]">${escapeHtml(m.unit || m.value + '%')}</span>
+                            </div>
+                            <div class="w-full h-3 bg-[#000000] hairline-border rounded overflow-hidden p-0.5">
+                                <div class="h-full bg-[#F5ECD7]" style="width: ${pct}%"></div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                return `
+                    <div class="bg-[#191919] hairline-border p-6 sm:p-10 rounded">
+                        ${headerHtml}
+                        <div class="space-y-5 hairline-t pt-6">
+                            ${bars}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // 4. BILD / VISUELLES ELEMENT
+            if (block.type === 'image') {
+                return `
+                    <div class="bg-[#191919] hairline-border p-6 sm:p-10 rounded">
+                        ${headerHtml}
+                        <div class="hairline-t pt-6 space-y-4">
+                            <div class="sona-image-container hairline-border rounded">
+                                <img 
+                                    src="${escapeHtml(block.imageUrl)}" 
+                                    alt="${escapeHtml(block.heading)}" 
+                                    class="w-full max-h-[420px] object-cover sona-image"
+                                    onerror="this.src='https://placehold.co/1200x600/000000/F5ECD7?text=SONA+VISUAL'"
+                                >
+                            </div>
+                            ${block.caption ? `<p class="text-xs text-[#E3D5CA] lowercase">${escapeHtml(block.caption)}</p>` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // 5. WEITERFÜHRENDE LINKS
+            if (block.type === 'links') {
+                const items = (block.links || []).map(l => `
+                    <a href="${escapeHtml(l.url)}" target="_blank" rel="noopener noreferrer" class="p-4 bg-[#000000] hover:bg-[#121212] hairline-border rounded flex flex-col sm:flex-row sm:items-center justify-between gap-2 transition group">
+                        <div>
+                            <div class="sona-item-title text-xs group-hover:underline underline-offset-4">${escapeHtml(l.label)}</div>
+                            ${l.note ? `<div class="text-xs text-[#E3D5CA] lowercase mt-1">${escapeHtml(l.note)}</div>` : ''}
+                        </div>
+                        <span class="sona-kicker text-[#F5ECD7] shrink-0">LINK ÖFFNEN ↗</span>
+                    </a>
+                `).join('');
+
+                return `
+                    <div class="bg-[#191919] hairline-border p-6 sm:p-10 rounded">
+                        ${headerHtml}
+                        <div class="grid grid-cols-1 gap-3 hairline-t pt-6">
+                            ${items}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // 6. INTERAKTIVE UMFRAGE / SCHULUNGSFRAGE
+            if (block.type === 'survey') {
+                const opts = (block.options || []).map((opt, oIdx) => `
+                    <label class="flex items-start gap-3 p-3.5 bg-[#000000] hover:bg-[#121212] hairline-border rounded cursor-pointer transition">
+                        <input type="radio" name="survey-${block.id}" value="${oIdx}" class="mt-1 accent-[#F5ECD7]">
+                        <span class="text-sm text-[#F5ECD7] lowercase">${escapeHtml(opt)}</span>
+                    </label>
+                `).join('');
+
+                return `
+                    <div class="bg-[#191919] hairline-border p-6 sm:p-10 rounded">
+                        ${headerHtml}
+                        <div class="hairline-t pt-5 space-y-4">
+                            <p class="sona-item-title text-sm">${escapeHtml(block.question || '')}</p>
+                            <div class="space-y-2.5">
+                                ${opts}
+                            </div>
+                            <div class="pt-2 flex flex-wrap items-center justify-between gap-4">
+                                <button type="button" onclick="evaluateSurvey('${block.id}', ${block.correctIndex})" class="sona-btn-filled rounded">
+                                    ANTWORT PRÜFEN / ABSENDEN
+                                </button>
+                                <div id="survey-feedback-${block.id}" class="text-xs text-[#F5ECD7] uppercase tracking-widest"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            return '';
+        }
+
+        function evaluateSurvey(blockId, correctIndex) {
+            const selected = document.querySelector(`input[name="survey-${blockId}"]:checked`);
+            const feedbackEl = document.getElementById(`survey-feedback-${blockId}`);
+            if (!selected) {
+                feedbackEl.textContent = '[ BITTE EINE OPTION AUSWÄHLEN ]';
+                return;
+            }
+            const chosenIdx = Number(selected.value);
+            if (correctIndex === -1 || correctIndex === undefined) {
+                feedbackEl.textContent = '[ VIELEN DANK — RÜCKMELDUNG GESPEICHERT ]';
+            } else if (chosenIdx === correctIndex) {
+                feedbackEl.textContent = '[ KORREKT BEANTWORTET — GEMÄSS SONA STANDARD ]';
+            } else {
+                feedbackEl.textContent = '[ NICHT KORREKT — BITTE LEITFADEN PRÜFEN ]';
+            }
+        }
+
+        // ==========================================================================
+        // ADMIN: KATALOG-THEMEN HINZUFÜGEN, BEARBEITEN, VERSCHIEBEN, LÖSCHEN
+        // ==========================================================================
+        function openTopicModal(topicId = null) {
+            const modal = document.getElementById('topic-modal');
+            const titleEl = document.getElementById('topic-modal-title');
+            const idInput = document.getElementById('edit-topic-id');
+            const titleInput = document.getElementById('topic-input-title');
+            const catInput = document.getElementById('topic-input-category');
+            const durInput = document.getElementById('topic-input-duration');
+            const sumInput = document.getElementById('topic-input-summary');
+            const initTextInput = document.getElementById('topic-input-initialtext');
+
+            if (topicId) {
+                const topic = catalogData.find(t => t.id === topicId);
+                if (!topic) return;
+                titleEl.textContent = 'THEMA BEARBEITEN';
+                idInput.value = topic.id;
+                titleInput.value = topic.title;
+                catInput.value = topic.category;
+                durInput.value = topic.duration;
+                sumInput.value = topic.summary;
+                initTextInput.value = '';
+                initTextInput.parentElement.classList.add('hidden');
+            } else {
+                titleEl.textContent = 'NEUES THEMA IM INHALTSVERZEICHNIS';
+                idInput.value = '';
+                titleInput.value = '';
+                catInput.value = 'LEITFADEN';
+                durInput.value = '10 min';
+                sumInput.value = '';
+                initTextInput.value = '';
+                initTextInput.parentElement.classList.remove('hidden');
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeTopicModal() {
+            document.getElementById('topic-modal').classList.add('hidden');
+        }
+
+        function saveTopicFromModal(e) {
+            e.preventDefault();
+            const id = document.getElementById('edit-topic-id').value;
+            const title = document.getElementById('topic-input-title').value.trim().toUpperCase();
+            const category = document.getElementById('topic-input-category').value;
+            const duration = document.getElementById('topic-input-duration').value.trim();
+            const summary = document.getElementById('topic-input-summary').value.trim().toLowerCase();
+            const initialText = document.getElementById('topic-input-initialtext').value.trim();
+
+            if (id) {
+                const topic = catalogData.find(t => t.id === id);
+                if (topic) {
+                    topic.title = title;
+                    topic.category = category;
+                    topic.duration = duration;
+                    topic.summary = summary;
+                }
+            } else {
+                const newTopicId = 'topic-' + Date.now();
+                const initialBlocks = [];
+                if (initialText) {
+                    initialBlocks.push({
+                        id: 'b-' + Date.now(),
+                        type: 'text',
+                        heading: 'GRUNDLAGEN & EINFÜHRUNG',
+                        subtext: summary,
+                        paragraphs: initialText.split('\n').filter(line => line.trim() !== '')
+                    });
+                }
+                catalogData.push({
+                    id: newTopicId,
+                    category,
+                    duration,
+                    title,
+                    summary,
+                    blocks: initialBlocks
+                });
+            }
+
+            saveCatalog();
+            closeTopicModal();
+            if (currentTopicId) {
+                renderTopicPage(currentTopicId);
+            } else {
+                renderCatalog();
+                updateStats();
+            }
+        }
+
+        function moveTopic(index, direction) {
+            const target = index + direction;
+            if (target < 0 || target >= catalogData.length) return;
+            const temp = catalogData[index];
+            catalogData[index] = catalogData[target];
+            catalogData[target] = temp;
+            saveCatalog();
+            renderCatalog();
+        }
+
+        function deleteTopic(topicId) {
+            catalogData = catalogData.filter(t => t.id !== topicId);
+            saveCatalog();
+            renderCatalog();
+            updateStats();
+        }
+
+        function resetDefaultData() {
+            catalogData = JSON.parse(JSON.stringify(DEFAULT_CATALOG));
+            readTopics = [];
+            saveCatalog();
+            localStorage.removeItem(READ_KEY);
+            navigateToHome();
+        }
+
+        // ==========================================================================
+        // ADMIN: INHALTSBLÖCKE AUF EINER THEMENSEITE HINZUFÜGEN / LÖSCHEN
+        // ==========================================================================
+        function openBlockModal() {
+            document.getElementById('block-heading').value = '';
+            document.getElementById('block-subtext').value = '';
+            document.getElementById('block-type-select').value = 'text';
+            updateBlockFormFields();
+            document.getElementById('block-modal').classList.remove('hidden');
+        }
+
+        function closeBlockModal() {
+            document.getElementById('block-modal').classList.add('hidden');
+        }
+
+        function updateBlockFormFields() {
+            const type = document.getElementById('block-type-select').value;
+            const container = document.getElementById('block-dynamic-fields');
+
+            if (type === 'text') {
+                container.innerHTML = `
+                    <div>
+                        <label class="block sona-kicker mb-2">TEXTABSÄTZE (JEDE ZEILE WIRD EIN ABSATZ)</label>
+                        <textarea id="dyn-text-paras" rows="5" placeholder="erster absatz zur erläuterung...\nzweiter absatz..." class="w-full px-4 py-3 text-sm rounded" required></textarea>
+                    </div>
+                `;
+            } else if (type === 'table') {
+                container.innerHTML = `
+                    <div>
+                        <label class="block sona-kicker mb-2">SPALTENKÖPFE (MIT KOMMA GETRENNT)</label>
+                        <input type="text" id="dyn-table-headers" value="BEZEICHNUNG, DETAILS, RICHTWERT" class="w-full px-4 py-3 text-sm rounded" required>
+                    </div>
+                    <div>
+                        <label class="block sona-kicker mb-2">TABELLENZEILEN (JE ZEILE EINE REIHE, SPALTEN MIT | TRENNEN)</label>
+                        <textarea id="dyn-table-rows" rows="4" placeholder="MAGURO | bluefin thunfisch | 14 tage\nSAKE | atlantik-lachs | 4 tage" class="w-full px-4 py-3 text-sm rounded" required></textarea>
+                    </div>
+                `;
+            } else if (type === 'diagram') {
+                container.innerHTML = `
+                    <div>
+                        <label class="block sona-kicker mb-2">KENNZAHLEN / BALKEN (JE ZEILE: BEZEICHNUNG | PROZENTWERT 0-100 | ANZEIGEWERT)</label>
+                        <textarea id="dyn-diagram-rows" rows="4" placeholder="WARENinsatz ZIELKORRIDOR | 28 | 28 %\nSERVICEZEIT MITTAGSTISCH | 85 | 12 MIN" class="w-full px-4 py-3 text-sm rounded" required></textarea>
+                    </div>
+                `;
+            } else if (type === 'image') {
+                container.innerHTML = `
+                    <div>
+                        <label class="block sona-kicker mb-2">BILD-URL (DIREKTLINK ZUM FOTO)</label>
+                        <input type="url" id="dyn-image-url" placeholder="https://images.unsplash.com/..." class="w-full px-4 py-3 text-sm rounded" required>
+                    </div>
+                    <div>
+                        <label class="block sona-kicker mb-2">BILDUNTERSCHRIFT / LEGENDE (KLEINGESCHRIEBEN)</label>
+                        <input type="text" id="dyn-image-caption" placeholder="beschreibung des motivs gemäß sona bildsprache" class="w-full px-4 py-3 text-sm rounded">
+                    </div>
+                `;
+            } else if (type === 'links') {
+                container.innerHTML = `
+                    <div>
+                        <label class="block sona-kicker mb-2">LINKS (JE ZEILE: TITEL | URL | HINWEIS)</label>
+                        <textarea id="dyn-links-rows" rows="4" placeholder="REZEPTUREN & STANDARDS | https://drive.google.com | interner ordner\nSCHULUNGSKALENDER | https://calendar.google.com | aktuelle termine" class="w-full px-4 py-3 text-sm rounded" required></textarea>
+                    </div>
+                `;
+            } else if (type === 'survey') {
+                container.innerHTML = `
+                    <div>
+                        <label class="block sona-kicker mb-2">FRAGE AN DAS TEAM</label>
+                        <input type="text" id="dyn-survey-question" placeholder="welche kerntemperatur gilt für den reifeschrank?" class="w-full px-4 py-3 text-sm rounded" required>
+                    </div>
+                    <div>
+                        <label class="block sona-kicker mb-2">ANTWORTOPTIONEN (EINE OPTION JE ZEILE)</label>
+                        <textarea id="dyn-survey-options" rows="3" placeholder="0,5 bis 1,5 grad\n6 bis 8 grad\n12 bis 14 grad" class="w-full px-4 py-3 text-sm rounded" required></textarea>
+                    </div>
+                    <div>
+                        <label class="block sona-kicker mb-2">RICHTIGE ANTWORT (1 = ERSTE ZEILE, 2 = ZWEITE ZEILE, 0 = OFFENE UMFRAGE)</label>
+                        <input type="number" id="dyn-survey-correct" value="1" min="0" max="10" class="w-full px-4 py-3 text-sm rounded">
+                    </div>
+                `;
+            }
+        }
+
+        function saveBlockFromModal(e) {
+            e.preventDefault();
+            if (!currentTopicId) return;
+            const topic = catalogData.find(t => t.id === currentTopicId);
+            if (!topic) return;
+
+            const type = document.getElementById('block-type-select').value;
+            const heading = document.getElementById('block-heading').value.trim().toUpperCase();
+            const subtext = document.getElementById('block-subtext').value.trim().toLowerCase();
+
+            const newBlock = {
+                id: 'b-' + Date.now(),
+                type,
+                heading,
+                subtext
+            };
+
+            if (type === 'text') {
+                const raw = document.getElementById('dyn-text-paras').value;
+                newBlock.paragraphs = raw.split('\n').map(s => s.trim()).filter(Boolean);
+            } else if (type === 'table') {
+                const hRaw = document.getElementById('dyn-table-headers').value;
+                const rRaw = document.getElementById('dyn-table-rows').value;
+                newBlock.headers = hRaw.split(',').map(s => s.trim().toUpperCase()).filter(Boolean);
+                newBlock.rows = rRaw.split('\n').filter(l => l.trim() !== '').map(line => line.split('|').map(c => c.trim()));
+            } else if (type === 'diagram') {
+                const dRaw = document.getElementById('dyn-diagram-rows').value;
+                newBlock.metrics = dRaw.split('\n').filter(l => l.trim() !== '').map(line => {
+                    const parts = line.split('|').map(s => s.trim());
+                    return {
+                        label: (parts[0] || 'KENNZAHL').toUpperCase(),
+                        value: Number(parts[1]) || 50,
+                        unit: parts[2] || (parts[1] ? parts[1] + ' %' : '50 %')
+                    };
+                });
+            } else if (type === 'image') {
+                newBlock.imageUrl = document.getElementById('dyn-image-url').value.trim();
+                newBlock.caption = document.getElementById('dyn-image-caption').value.trim().toLowerCase();
+            } else if (type === 'links') {
+                const lRaw = document.getElementById('dyn-links-rows').value;
+                newBlock.links = lRaw.split('\n').filter(l => l.trim() !== '').map(line => {
+                    const parts = line.split('|').map(s => s.trim());
+                    return {
+                        label: (parts[0] || 'DOKUMENT').toUpperCase(),
+                        url: parts[1] || 'https://drive.google.com',
+                        note: (parts[2] || '').toLowerCase()
+                    };
+                });
+            } else if (type === 'survey') {
+                newBlock.question = document.getElementById('dyn-survey-question').value.trim().toLowerCase();
+                const oRaw = document.getElementById('dyn-survey-options').value;
+                newBlock.options = oRaw.split('\n').map(s => s.trim()).filter(Boolean);
+                const corrNum = Number(document.getElementById('dyn-survey-correct').value);
+                newBlock.correctIndex = corrNum > 0 ? corrNum - 1 : -1;
+            }
+
+            topic.blocks = topic.blocks || [];
+            topic.blocks.push(newBlock);
+            saveCatalog();
+            closeBlockModal();
+            renderTopicPage(currentTopicId);
+        }
+
+        function deleteBlock(topicId, blockId) {
+            const topic = catalogData.find(t => t.id === topicId);
+            if (!topic) return;
+            topic.blocks = (topic.blocks || []).filter(b => b.id !== blockId);
+            saveCatalog();
+            renderTopicPage(topicId);
+        }
+
+        // ==========================================================================
+        // GOOGLE SITES EXPORT-FUNKTION
+        // ==========================================================================
+        function openGoogleSitesGuide() {
+            document.getElementById('copy-feedback').textContent = '';
+            document.getElementById('gsites-modal').classList.remove('hidden');
+        }
+
+        function closeGoogleSitesGuide() {
+            document.getElementById('gsites-modal').classList.add('hidden');
+        }
+
+        function copyFullHtmlForGoogleSites() {
+            const fullHtml = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+            const tempArea = document.createElement('textarea');
+            tempArea.value = fullHtml;
+            document.body.appendChild(tempArea);
+            tempArea.select();
+            try {
+                document.execCommand('copy');
+                document.getElementById('copy-feedback').textContent = '[ CODE IN DIE ZWISCHENABLAGE KOPIERT ]';
+            } catch (err) {
+                document.getElementById('copy-feedback').textContent = '[ KOPIEREN FEHLGESCHLAGEN ]';
+            }
+            document.body.removeChild(tempArea);
+        }
+
+        // Hilfsfunktion zur sicheren Textausgabe
+        function escapeHtml(str) {
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        // Start beim Laden des Fensters
+        window.onload = function () {
+            initData();
+        };
+    </script>
+</body>
+</html>
