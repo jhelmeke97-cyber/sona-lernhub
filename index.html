@@ -11,6 +11,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     
+    <!-- Firebase Cloud-Datenbank (Echtzeit-Synchronisierung für alle Mitarbeiter) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    
     <style>
         /* ==========================================================================
            SONA BRAND GUIDELINES — STRENGE FARB- & TYPOGRAFIE-REGELN
@@ -621,6 +625,12 @@
         const STORAGE_KEY = 'sona_lernhub_catalog_v1';
         const READ_KEY = 'sona_lernhub_read_v1';
 
+        // ==========================================================================
+        // FIREBASE CLOUD-DATENBANK KONFIGURATION (ECHTZEIT-SYNC)
+        // ==========================================================================
+        const FIREBASE_CONFIG = null; // Hier die Zugangsdaten einfügen
+        let cloudDb = null;
+
         // Zugangs-Codes laut Anforderung
         const CODE_USER = 'Sona.lernen';
         const CODE_ADMIN = 'taste.the.passion';
@@ -904,7 +914,7 @@
         ];
 
         // ==========================================================================
-        // INITIALISIERUNG & SPEICHERVERWALTUNG
+        // INITIALISIERUNG & SPEICHERVERWALTUNG (LOCALSTORAGE + FIREBASE CLOUD)
         // ==========================================================================
         function initData() {
             try {
@@ -924,11 +934,58 @@
                 catalogData = JSON.parse(JSON.stringify(DEFAULT_CATALOG));
                 readTopics = [];
             }
+
+            // Cloud-Synchronisierung initialisieren
+            initCloudSync();
+        }
+
+        function initCloudSync() {
+            if (typeof firebase !== 'undefined' && FIREBASE_CONFIG && FIREBASE_CONFIG.projectId) {
+                try {
+                    if (!firebase.apps.length) {
+                        firebase.initializeApp(FIREBASE_CONFIG);
+                    }
+                    cloudDb = firebase.firestore();
+
+                    // Echtzeit-Überwachung des Katalogs in der Cloud
+                    cloudDb.collection('sona').doc('catalog').onSnapshot((docSnap) => {
+                        if (docSnap.exists) {
+                            const cloudCatalog = docSnap.data().topics;
+                            if (Array.isArray(cloudCatalog) && cloudCatalog.length > 0) {
+                                catalogData = cloudCatalog;
+                                localStorage.setItem(STORAGE_KEY, JSON.stringify(catalogData));
+                                if (currentTopicId) {
+                                    renderTopicPage(currentTopicId);
+                                } else {
+                                    renderCatalog();
+                                }
+                                updateStats();
+                            }
+                        } else {
+                            // Erster Start: Katalog in Cloud initialisieren
+                            cloudDb.collection('sona').doc('catalog').set({
+                                topics: catalogData,
+                                updatedAt: new Date().toISOString()
+                            });
+                        }
+                    }, (err) => {
+                        console.warn('Firebase Cloud Sync Hinweis:', err);
+                    });
+                } catch (err) {
+                    console.error('Firebase Initialisierungsfehler:', err);
+                }
+            }
         }
 
         function saveCatalog() {
             try {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(catalogData));
+                if (cloudDb) {
+                    cloudDb.collection('sona').doc('catalog').set({
+                        topics: catalogData,
+                        updatedAt: new Date().toISOString()
+                    }).catch(err => console.error('Cloud Speicherfehler:', err));
+                }
             } catch (e) {
                 console.error('Speicherfehler:', e);
             }
