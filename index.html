@@ -193,19 +193,19 @@
     <!-- ==========================================================================
          1. ANMELDEBILDSCHIRM (ZUGANGSCODE: Sona.lernen / taste.the.passion)
          ========================================================================== -->
-    <div id="login-view" class="fixed inset-0 z-50 bg-[#000000] flex flex-col justify-between p-6 md:p-12 overflow-y-auto">
+    <div id="login-view" class="min-h-screen bg-[#000000] flex flex-col justify-between p-4 sm:p-8">
         <!-- Obere Claim-Zeile -->
-        <div class="w-full max-w-5xl mx-auto flex justify-between items-center py-2 hairline-b">
+        <div class="w-full max-w-5xl mx-auto flex justify-between items-center py-2 hairline-b shrink-0">
             <span class="sona-claim">TASTE THE PASSION</span>
             <span class="sona-kicker">INTERNE LERNPLATTFORM</span>
         </div>
 
         <!-- Zentrum mit Enso-Logo & Code-Eingabe -->
-        <div class="my-auto w-full max-w-md mx-auto py-12 text-center">
-            <!-- Schutzraum rund um das Primärlogo (mind. 1/4 Kreisdurchmesser) -->
-            <div class="p-8 md:p-10 flex flex-col items-center justify-center">
+        <div class="my-auto w-full max-w-md mx-auto py-4 text-center">
+            <!-- Schutzraum rund um das Primärlogo -->
+            <div class="p-3 md:p-4 flex flex-col items-center justify-center">
                 <!-- SONA Enso-Kreis Primärlogo SVG -->
-                <svg viewBox="0 0 320 260" class="w-56 md:w-64 h-auto" aria-label="SONA Logo">
+                <svg viewBox="0 0 320 260" class="w-36 md:w-44 h-auto" aria-label="SONA Logo">
                     <!-- Offener Enso-Pinselkreis in Cream Beige (#F5ECD7) -->
                     <path d="M 110 88 C 122 44, 174 20, 224 38 C 276 56, 302 115, 284 170 C 266 222, 206 248, 152 228 C 122 216, 102 192, 95 162" 
                           fill="none" stroke="#F5ECD7" stroke-width="6.5" stroke-linecap="round" />
@@ -220,42 +220,42 @@
                     <text x="26" y="141" fill="#F5ECD7" font-family="'Cormorant Garamond', Georgia, serif" font-size="40" font-weight="400" letter-spacing="11">SONA</text>
                 </svg>
 
-                <div class="mt-4 pt-3 hairline-t w-44 text-center">
-                    <div class="font-audrey text-sm tracking-[0.2em] text-[#F5ECD7]">SONA</div>
+                <div class="mt-2 pt-2 hairline-t w-36 text-center">
+                    <div class="font-audrey text-xs tracking-[0.2em] text-[#F5ECD7]">SONA</div>
                 </div>
             </div>
 
-            <div class="mt-2 mb-8">
-                <p class="sona-kicker mb-2">DIGITALE AKADEMIE</p>
-                <h1 class="font-audrey text-2xl md:text-3xl text-[#F5ECD7]">SONA LERNHUB</h1>
-                <p class="text-sm text-[#E3D5CA] mt-2 lowercase">
+            <div class="mt-1 mb-4">
+                <p class="sona-kicker mb-1">DIGITALE AKADEMIE</p>
+                <h1 class="font-audrey text-xl md:text-2xl text-[#F5ECD7]">SONA LERNHUB</h1>
+                <p class="text-xs text-[#E3D5CA] mt-1 lowercase">
                     leitfäden, schulungen, warenkunde und qualitätsstandards für küche, bar und service
                 </p>
             </div>
 
-            <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4 text-left">
+            <form id="login-form" onsubmit="handleLogin(event)" class="space-y-3 text-left">
                 <div>
-                    <label for="access-code" class="block sona-kicker mb-2">ZUGANGSCODE EINGEBEN</label>
+                    <label for="access-code" class="block sona-kicker mb-1.5">ZUGANGSCODE EINGEBEN</label>
                     <input 
                         type="password" 
                         id="access-code" 
                         placeholder="universalcode oder admincode" 
-                        class="w-full px-4 py-3.5 text-sm rounded"
+                        class="w-full px-3.5 py-2.5 text-sm rounded"
                         autocomplete="off"
                         required
                     >
                 </div>
-                <div id="login-error" class="hidden py-2 px-3 bg-[#191919] hairline-border text-xs text-[#E3D5CA] lowercase">
+                <div id="login-error" class="hidden py-1.5 px-3 bg-[#191919] hairline-border text-xs text-[#E3D5CA] lowercase">
                     der eingegebene code wurde nicht erkannt. bitte zugangscode prüfen.
                 </div>
-                <button type="submit" class="w-full sona-btn-filled rounded py-3.5">
+                <button type="submit" class="w-full sona-btn-filled rounded py-2.5">
                     ANMELDEN
                 </button>
             </form>
         </div>
 
         <!-- Untere Fußzeile -->
-        <div class="w-full max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center py-3 hairline-t gap-2">
+        <div class="w-full max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center py-2.5 hairline-t gap-2 shrink-0">
             <span class="sona-kicker">VERSION: STAND 23.10.2026</span>
             <span class="sona-claim">TASTE THE PASSION</span>
         </div>
