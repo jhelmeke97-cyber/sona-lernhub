@@ -48,16 +48,21 @@ Gemäß der verbindlichen SONA-Markenidentität gelten absolute Design-Vorgaben:
 
 ---
 
-## 🌐 Einbettung in Google Sites
+## 🌐 Live-URL & Google Sites Einbindung
 
-Die Anwendung ist speziell dafür optimiert, als ganzer Embed-Block in Google Sites betrieben zu werden.
+- **Live-Webadresse (GitHub Pages):** [https://jhelmeke97-cyber.github.io/sona-lernhub/](https://jhelmeke97-cyber.github.io/sona-lernhub/)
+- **Google Sites Editor:** [Google Sites Editor öffnen](https://sites.google.com/d/16Vf21bfSWX6LjTwRjgw7x20Ayi8ujc_G/p/1th87MPjxdjyDkTeEfy_J4YNje5mjH3aq/edit?pli=1)
 
-- **Ziel-Seite / Arbeitsumgebung:** [Google Sites Editor](https://sites.google.com/d/16Vf21bfSWX6LjTwRjgw7x20Ayi8ujc_G/p/1th87MPjxdjyDkTeEfy_J4YNje5mjH3aq/edit?pli=1)
-- **Vorgehensweise:**
-  1. Öffne die `index.html` im Browser oder nutze im Lernhub den Button **„Google Sites Export“**.
-  2. Klicke auf **„Vollständigen HTML-Code kopieren“**.
-  3. Wechsle im Google Sites Editor im rechten Menü auf **Einfügen > Einbetten > Einbettungscode**.
-  4. Füge den kopierten HTML-Code ein und ziehe den Rahmen im Layout auf volle Breite und gewünschte Höhe.
+### Einmalige Einbindung in Google Sites (mit automatischer Aktualisierung):
+1. Öffne die Seite im [Google Sites Editor](https://sites.google.com/d/16Vf21bfSWX6LjTwRjgw7x20Ayi8ujc_G/p/1th87MPjxdjyDkTeEfy_J4YNje5mjH3aq/edit?pli=1).
+2. Klicke rechts unter **Einfügen** auf **Einbetten** (oder bearbeite das bestehende Embed-Feld).
+3. Wähle den Reiter **„Nach URL“** (nicht „Einbettungscode“).
+4. Füge die Live-Adresse ein:
+   ```
+   https://jhelmeke97-cyber.github.io/sona-lernhub/
+   ```
+5. Ziehe den Rahmen auf die volle Seitenbreite und klicke oben rechts auf **Veröffentlichen**.
+6. **Fertig!** Ab sofort synchronisieren sich alle zukünftigen `git push`-Änderungen vollautomatisch auf deiner Google Sites Seite!
 
 ---
 
