@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SONA — Buffet- & Speisenbeschilderung</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cormorant Garamond (Audrey Äquivalent) & Inter (Neue Haas Display Äquivalent) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           SONA BRAND GUIDELINES — STRENGE FARB- & GESTALTUNGSREGELN
+           5 Farben: Brand Black (#000000), Charcoal Grey (#121212), Deep Grey (#191919),
+           Cream Beige (#F5ECD7), Silk Beige (#E3D5CA).
+           Keine Schatten, keine Verläufe, keine bunten Emojis.
+           ========================================================================== */
+        :root {
+            --brand-black: #000000;
+            --charcoal-grey: #121212;
+            --deep-grey: #191919;
+            --cream-beige: #F5ECD7;
+            --silk-beige: #E3D5CA;
+        }
+
+        * {
+            box-sizing: border-box;
+            box-shadow: none !important;
+            text-shadow: none !important;
+        }
+
+        body {
+            background-color: var(--charcoal-grey);
+            color: var(--cream-beige);
+            font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 300;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Typografie */
+        .font-audrey {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        .font-audrey-bold {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+        }
+
+        .sona-claim {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 0.42em;
+            font-size: 0.7rem;
+            color: var(--cream-beige);
+        }
+
+        .sona-kicker {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 0.28em;
+            font-size: 0.65rem;
+            color: var(--silk-beige);
+        }
+
+        .sona-item-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--cream-beige);
+        }
+
+        .tabular-nums {
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Haarlinien & Rahmen */
+        .hairline-t {
+            border-top: 1px solid rgba(245, 236, 215, 0.2);
+        }
+        .hairline-b {
+            border-bottom: 1px solid rgba(245, 236, 215, 0.2);
+        }
+        .hairline-border {
+            border: 1px solid rgba(245, 236, 215, 0.22);
+        }
+        .hairline-border-strong {
+            border: 1px solid var(--cream-beige);
+        }
+
+        /* Buttons & Formularelemente */
+        .sona-btn {
+            background-color: transparent;
+            color: var(--cream-beige);
+            border: 1px solid rgba(245, 236, 215, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.7rem;
+            font-weight: 400;
+            padding: 0.6rem 1.2rem;
+            transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        .sona-btn:hover {
+            background-color: var(--cream-beige);
+            color: var(--brand-black);
+            border-color: var(--cream-beige);
+        }
+
+        .sona-btn-filled {
+            background-color: var(--cream-beige);
+            color: var(--brand-black);
+            border: 1px solid var(--cream-beige);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.7rem;
+            font-weight: 500;
+            padding: 0.6rem 1.2rem;
+            transition: background-color 0.15s ease, color 0.15s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        .sona-btn-filled:hover {
+            background-color: var(--silk-beige);
+            border-color: var(--silk-beige);
+        }
+
+        input, textarea, select {
+            background-color: var(--brand-black);
+            color: var(--cream-beige);
+            border: 1px solid rgba(245, 236, 215, 0.3);
+            outline: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            font-size: 0.85rem;
+            padding: 0.55rem 0.75rem;
+            transition: border-color 0.2s ease;
+        }
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--cream-beige);
+        }
+        input::placeholder, textarea::placeholder {
+            color: var(--silk-beige);
+            opacity: 0.6;
+        }
+
+        /* ==========================================================================
+           KARTEN-DESIGN-VARIATIONEN (85 x 55 mm)
+           ========================================================================== */
+        
+        /* 1. DARK SLATE LOOK (Edler dunkler Look für Acryl- & Schieferhalter) */
+        .card-preview-dark {
+            background-color: #121212;
+            color: #F5ECD7;
+            border: 1px solid rgba(245, 236, 215, 0.25);
+        }
+        .card-preview-dark .c-kicker {
+            color: #E3D5CA;
+        }
+        .card-preview-dark .c-title {
+            color: #F5ECD7;
+        }
+        .card-preview-dark .c-kanji {
+            color: rgba(245, 236, 215, 0.45);
+        }
+        .card-preview-dark .c-prose {
+            color: #E3D5CA;
+        }
+        .card-preview-dark .c-badge {
+            border: 1px solid rgba(245, 236, 215, 0.35);
+            color: #F5ECD7;
+            background-color: rgba(245, 236, 215, 0.05);
+        }
+        .card-preview-dark .c-meta {
+            color: rgba(227, 213, 202, 0.75);
+            border-top: 1px solid rgba(245, 236, 215, 0.15);
+        }
+        .card-preview-dark .c-enso {
+            stroke: #F5ECD7;
+            opacity: 0.18;
+        }
+
+        /* 2. CREAM PAPER LOOK (Heller Look, extrem tintensparend & edel auf Naturpapier) */
+        .card-preview-light {
+            background-color: #FAF6EE;
+            color: #121212;
+            border: 1px solid #191919;
+        }
+        .card-preview-light .c-kicker {
+            color: #555555;
+        }
+        .card-preview-light .c-title {
+            color: #000000;
+        }
+        .card-preview-light .c-kanji {
+            color: rgba(0, 0, 0, 0.35);
+        }
+        .card-preview-light .c-prose {
+            color: #222222;
+        }
+        .card-preview-light .c-badge {
+            border: 1px solid #191919;
+            color: #000000;
+            background-color: rgba(0, 0, 0, 0.04);
+        }
+        .card-preview-light .c-meta {
+            color: #555555;
+            border-top: 1px solid rgba(0, 0, 0, 0.15);
+        }
+        .card-preview-light .c-enso {
+            stroke: #000000;
+            opacity: 0.12;
+        }
+
+        /* Physische Dimensionen für die Einsteckkarte: 85mm x 55mm */
+        .buffet-card {
+            width: 85mm;
+            height: 55mm;
+            padding: 4mm 5mm 3.5mm 5mm;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            box-sizing: border-box;
+            overflow: hidden;
+            user-select: none;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        /* Schneidemarken / Schnittlinien (Crop Marks) */
+        .crop-container {
+            position: relative;
+            display: inline-block;
+            margin: 2mm;
+        }
+
+        /* Feine Eck-Schneidemarken (4 Ecken pro Karte für Schneidelineal) */
+        .crop-mark {
+            position: absolute;
+            width: 4mm;
+            height: 4mm;
+            pointer-events: none;
+        }
+        .crop-tl {
+            top: -2mm;
+            left: -2mm;
+            border-top: 0.5pt solid rgba(0, 0, 0, 0.4);
+            border-left: 0.5pt solid rgba(0, 0, 0, 0.4);
+        }
+        .crop-tr {
+            top: -2mm;
+            right: -2mm;
+            border-top: 0.5pt solid rgba(0, 0, 0, 0.4);
+            border-right: 0.5pt solid rgba(0, 0, 0, 0.4);
+        }
+        .crop-bl {
+            bottom: -2mm;
+            left: -2mm;
+            border-bottom: 0.5pt solid rgba(0, 0, 0, 0.4);
+            border-left: 0.5pt solid rgba(0, 0, 0, 0.4);
+        }
+        .crop-br {
+            bottom: -2mm;
+            right: -2mm;
+            border-bottom: 0.5pt solid rgba(0, 0, 0, 0.4);
+            border-right: 0.5pt solid rgba(0, 0, 0, 0.4);
+        }
+
+        /* Im Dark-Mode sind Schneidemarken im Screen hell, im Druck dunkel */
+        .dark-marks .crop-mark {
+            border-color: rgba(245, 236, 215, 0.4);
+        }
+
+        /* ==========================================================================
+           DRUCK-STYLES (@media print)
+           Perfektes DIN A4 Layout (2 Spalten x 4 Zeilen = 8 Kärtchen / Seite)
+           ========================================================================== */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 10mm 15mm;
+            }
+
+            body {
+                background: #FFFFFF !important;
+                color: #000000 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            /* Alle UI-Elemente ausblenden */
+            .no-print, header, nav, #app-controls, #modal-backdrop, #edit-modal, #import-export-modal {
+                display: none !important;
+            }
+
+            /* Nur Druckbereich anzeigen */
+            #print-sheet-wrapper {
+                display: block !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .print-page-grid {
+                display: grid !important;
+                grid-template-columns: repeat(2, 85mm) !important;
+                gap: 4mm 6mm !important;
+                justify-content: center !important;
+                align-content: start !important;
+                page-break-after: always;
+                break-after: page;
+            }
+
+            .print-page-grid:last-child {
+                page-break-after: auto;
+                break-after: auto;
+            }
+
+            .crop-container {
+                margin: 0 !important;
+            }
+
+            .crop-mark {
+                border-color: #666666 !important;
+            }
+
+            /* Exakte Farbtreue sicherstellen */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#F5ECD7] selection:text-[#000000]">
+
+    <!-- ==========================================================================
+         1. HEADER: BRANDING & NAVIGATION
+         ========================================================================== -->
+    <header class="no-print bg-[#000000] hairline-b sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+            
+            <!-- Linke Seite: Logo & Systemtitel -->
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="flex items-center gap-3 group focus:outline-none" title="Zurück zum SONA Lernhub">
+                    <svg viewBox="0 0 260 120" class="h-9 w-auto" aria-label="SONA Logo">
+                        <path d="M 145 36 C 154 14, 184 4, 212 14 C 240 24, 254 56, 244 86 C 234 112, 202 124, 174 114 C 158 108, 147 95, 143 79" 
+                              fill="none" stroke="#F5ECD7" stroke-width="4.2" stroke-linecap="round" />
+                        <path d="M 148 92 C 158 106, 176 116, 198 116" 
+                              fill="none" stroke="#F5ECD7" stroke-width="1.2" stroke-linecap="round" />
+                        <text x="8" y="70" fill="#F5ECD7" font-family="'Cormorant Garamond', Georgia, serif" font-size="29" font-weight="400" letter-spacing="8">SONA</text>
+                    </svg>
+                    <div class="pl-3 border-l border-[#F5ECD7]/25">
+                        <div class="font-audrey text-sm sm:text-base tracking-[0.16em] text-[#F5ECD7]">BUFFET-BESCHILDERUNG</div>
+                        <div class="text-[10px] text-[#E3D5CA] tracking-wider uppercase font-light">EINSTECKKARTEN-GENERATOR (85 × 55 MM)</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Rechte Seite: Primäre Aktionen -->
+            <div class="flex items-center flex-wrap gap-2.5">
+                <a href="index.html" class="sona-btn rounded px-3 py-1.5 text-xs">
+                    ← ZUM LERNHUB
+                </a>
+                <button onclick="openImportExportModal()" class="sona-btn rounded px-3 py-1.5 text-xs" title="Karten als JSON sichern oder laden">
+                    BACKUP &amp; IMPORT
+                </button>
+                <button onclick="openEditModal(null)" class="sona-btn-filled rounded px-3.5 py-1.5 text-xs">
+                    + NEUES GERICHT
+                </button>
+                <button onclick="triggerPrint()" class="sona-btn-filled rounded px-4 py-1.5 text-xs font-semibold" title="Öffnet Druckdialog für DIN A4 Bogen">
+                    DRUCKBOGEN (CTRL+P)
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==========================================================================
+         2. HAUPTBEREICH: STEUERUNG, FILTER & KARTEN-SAMMLUNG
+         ========================================================================== -->
+    <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-8 py-8 space-y-8">
+
+        <!-- STEUERUNGSLEISTE (Filter, Suche, Design-Modus & Zähler) -->
+        <section id="app-controls" class="no-print bg-[#191919] hairline-border p-5 rounded space-y-4">
+            
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 hairline-b pb-4">
+                <div>
+                    <span class="sona-kicker">KOLLEKTION &amp; DRUCKAUSWAHL</span>
+                    <h1 class="font-audrey text-xl md:text-2xl text-[#F5ECD7] mt-0.5">
+                        SPEISEN- &amp; ZUTATENKATALOG
+                    </h1>
+                </div>
+
+                <!-- Status & Live-Zähler -->
+                <div class="flex items-center gap-4 text-xs">
+                    <div class="text-right">
+                        <div class="sona-kicker">AKTIVE AUSWAHL</div>
+                        <div class="tabular-nums font-medium text-[#F5ECD7]">
+                            <span id="stat-selected-count">0</span> von <span id="stat-total-count">0</span> Gerichten gewählt
+                        </div>
+                    </div>
+                    <div class="pl-4 border-l border-[#F5ECD7]/20 text-right">
+                        <div class="sona-kicker">BEDARF DRUCKBÖGEN</div>
+                        <div id="stat-pages-count" class="tabular-nums font-medium text-[#F5ECD7]">
+                            0 Seiten (DIN A4)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Zweite Zeile: Filter-Optionen, Schnellwahl und Design-Umschalter -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+                
+                <!-- Volltextsuche -->
+                <div class="lg:col-span-4">
+                    <input 
+                        type="text" 
+                        id="search-input" 
+                        placeholder="suche nach gericht, zutat, allergen oder badge..." 
+                        class="w-full rounded text-xs py-2 px-3"
+                        oninput="renderCards()"
+                    >
+                </div>
+
+                <!-- Kategorien-Filter Dropdown -->
+                <div class="lg:col-span-3">
+                    <select id="category-filter" class="w-full rounded text-xs py-2 px-3" onchange="renderCards()">
+                        <option value="ALL">ALLE KATEGORIEN</option>
+                        <option value="NIGIRI">NIGIRI SPEZIALITÄTEN</option>
+                        <option value="ROLLS">INSIDE OUT &amp; ROLLS</option>
+                        <option value="SASHIMI">SASHIMI &amp; RAW</option>
+                        <option value="WARM">WARM KITCHEN &amp; GRILL</option>
+                        <option value="STARTER">VORSPEISEN &amp; SUPPEN</option>
+                        <option value="DESSERT">DESSERT KREATIONEN</option>
+                        <option value="SPECIAL">BUFFET SPECIALS</option>
+                    </select>
+                </div>
+
+                <!-- Schnell-Auswahl Buttons -->
+                <div class="lg:col-span-2 flex gap-2">
+                    <button onclick="selectAll(true)" class="sona-btn rounded px-2.5 py-1.5 text-[11px] w-full" title="Alle sichtbaren Gerichte zum Druck anwählen">
+                        ALLE [✓]
+                    </button>
+                    <button onclick="selectAll(false)" class="sona-btn rounded px-2.5 py-1.5 text-[11px] w-full" title="Auswahl aufheben">
+                        KEINE [ ]
+                    </button>
+                </div>
+
+                <!-- Design-Stil Umschalter (Dark vs. Cream) -->
+                <div class="lg:col-span-3 flex items-center justify-end gap-2 bg-[#000000] p-1 rounded hairline-border">
+                    <button 
+                        id="style-toggle-dark" 
+                        onclick="setCardStyle('dark')" 
+                        class="flex-1 py-1 px-2 text-[10px] tracking-wider uppercase font-medium rounded transition bg-[#F5ECD7] text-[#000000]"
+                    >
+                        DARK SLATE
+                    </button>
+                    <button 
+                        id="style-toggle-light" 
+                        onclick="setCardStyle('light')" 
+                        class="flex-1 py-1 px-2 text-[10px] tracking-wider uppercase font-medium rounded transition text-[#E3D5CA] hover:text-[#F5ECD7]"
+                    >
+                        CREAM PAPER (ECO)
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- HINWEIS-BOX & PRAKTISCHE ANLEITUNG ZUM AUSSCHNEIDEN -->
+        <section class="no-print bg-[#121212] hairline-border p-4 rounded flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs text-[#E3D5CA]">
+            <div class="space-y-1">
+                <span class="sona-kicker text-[#F5ECD7]">PRAXIS-TIPP FÜR DAS BUFFET</span>
+                <p class="lowercase">
+                    standardmaß für einsteckkarten: <strong>85 × 55 mm</strong> (passend für edelstahl-klemmen, schiefer-schlitze &amp; acryl-l-aufsteller). 
+                    beim drucken auf a4 werden feine eck-schneidemarken mitgedruckt. 
+                    tipp: im druckdialog <strong>„ränder: keine“</strong> und <strong>„hintergrundgrafiken: an“</strong> wählen.
+                </p>
+            </div>
+            <div class="shrink-0 flex items-center gap-2">
+                <button onclick="openQuickAddSampleData()" class="sona-btn rounded px-3 py-1 text-[11px]" title="Event-Gerichte (z. B. Summer Rolls, Tom Kha) laden">
+                    EVENT-DATEN LADEN
+                </button>
+            </div>
+        </section>
+
+        <!-- KARTEN-RASTER IM SCREEN (LIVE INTERAKTIV) -->
+        <section class="no-print space-y-4">
+            <div class="flex justify-between items-baseline hairline-b pb-2">
+                <div class="sona-kicker">VORSCHAU &amp; AUSWAHL (<span id="visible-cards-count">0</span> POSITIONEN)</div>
+                <div class="text-[11px] text-[#E3D5CA] lowercase">
+                    klicke auf eine karte, um sie zu bearbeiten oder die checkbox für den ausdruck zu aktivieren
+                </div>
+            </div>
+
+            <!-- Container für interaktive Karten -->
+            <div id="interactive-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Dynamisch generiert -->
+            </div>
+        </section>
+
+        <!-- ======================================================================
+             3. DRUCK-BEREICH (Wird im Druckmodus oder bei Druckansicht formatiert)
+             ====================================================================== -->
+        <section id="print-sheet-wrapper" class="hidden">
+            <!-- Dynamisch befüllt mit DIN A4 Seiten à 8 Kärtchen (2 x 4 Raster) -->
+        </section>
+
+    </main>
+
+    <!-- ==========================================================================
+         4. MODAL: GERICHT ANLEGEN / BEARBEITEN
+         ========================================================================== -->
+    <div id="edit-modal" class="no-print fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-[#000000]/85 backdrop-blur-sm">
+        <div class="bg-[#121212] hairline-border-strong rounded-none max-w-2xl w-full max-h-[92vh] flex flex-col justify-between overflow-hidden">
+            
+            <!-- Modal Header -->
+            <div class="bg-[#000000] p-4 hairline-b flex items-center justify-between">
+                <div>
+                    <span class="sona-kicker">KARTEN-EDITOR</span>
+                    <h2 id="modal-title" class="font-audrey text-lg text-[#F5ECD7]">GERICHT BEARBEITEN</h2>
+                </div>
+                <button onclick="closeEditModal()" class="text-[#E3D5CA] hover:text-[#F5ECD7] text-lg px-2">✕</button>
+            </div>
+
+            <!-- Modal Body (Formular) -->
+            <form id="card-form" onsubmit="saveCardForm(event)" class="p-5 overflow-y-auto space-y-4 text-xs">
+                <input type="hidden" id="edit-card-id">
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-3">
+                    
+                    <!-- Kicker / Rubrik -->
+                    <div class="md:col-span-5 space-y-1">
+                        <label class="block sona-kicker">KATEGORIE / KICKER</label>
+                        <input 
+                            type="text" 
+                            id="field-kicker" 
+                            placeholder="z. B. NIGIRI SPEZIALITÄT" 
+                            list="kicker-suggestions"
+                            class="w-full rounded"
+                            required
+                        >
+                        <datalist id="kicker-suggestions">
+                            <option value="NIGIRI SPEZIALITÄT">
+                            <option value="INSIDE OUT ROLL">
+                            <option value="SASHIMI & RAW">
+                            <option value="WARM KITCHEN">
+                            <option value="SUPPE & VORSPEISE">
+                            <option value="BUFFET SPECIAL">
+                            <option value="DESSERT KREATION">
+                        </datalist>
+                    </div>
+
+                    <!-- Titel des Gerichts -->
+                    <div class="md:col-span-7 space-y-1">
+                        <label class="block sona-kicker">GERICHTSNAME (VERSALIEN)</label>
+                        <input 
+                            type="text" 
+                            id="field-title" 
+                            placeholder="z. B. SAKE TRUFFLE NIGIRI" 
+                            class="w-full rounded font-medium"
+                            required
+                        >
+                    </div>
+
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-3">
+                    
+                    <!-- Japanische Bezeichnung (Kanji / Katakana) -->
+                    <div class="md:col-span-6 space-y-1">
+                        <label class="block sona-kicker">JAPANISCHE BEZEICHNUNG (OPTIONAL)</label>
+                        <input 
+                            type="text" 
+                            id="field-kanji" 
+                            placeholder="z. B. サーモントリュフ oder 生春巻き" 
+                            class="w-full rounded"
+                        >
+                    </div>
+
+                    <!-- Spezifische Speisenart (für Filter) -->
+                    <div class="md:col-span-6 space-y-1">
+                        <label class="block sona-kicker">FILTER-KATEGORIE</label>
+                        <select id="field-category-group" class="w-full rounded">
+                            <option value="NIGIRI">Nigiri</option>
+                            <option value="ROLLS">Inside Out / Rolls</option>
+                            <option value="SASHIMI">Sashimi / Raw</option>
+                            <option value="WARM">Warm Kitchen / Hauptgericht</option>
+                            <option value="STARTER">Vorspeise / Suppe / Salat</option>
+                            <option value="DESSERT">Dessert</option>
+                            <option value="SPECIAL">Buffet Special</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <!-- Zutaten & Beschreibung (lowercase) -->
+                <div class="space-y-1">
+                    <div class="flex justify-between items-baseline">
+                        <label class="block sona-kicker">ZUTATEN &amp; BESCHREIBUNG (FLIESSEND KLEINGESCHRIEBEN)</label>
+                        <span class="text-[10px] text-[#E3D5CA] opacity-70">ca. 45–80 zeichen</span>
+                    </div>
+                    <textarea 
+                        id="field-ingredients" 
+                        rows="2" 
+                        placeholder="z. B. flambierter lachs, getrüffelte teriyaki-glaze, knuspriges kataifi, shiso-kresse" 
+                        class="w-full rounded lowercase"
+                        required
+                    ></textarea>
+                </div>
+
+                <!-- Typografische Badges (Ernährungsform ohne bunte Emojis) -->
+                <div class="space-y-1.5 pt-1 hairline-t">
+                    <label class="block sona-kicker">ERNÄHRUNGSFORM-BADGES (TYPOGRAFISCH)</label>
+                    <div class="flex flex-wrap gap-2">
+                        <label class="inline-flex items-center gap-1.5 bg-[#000000] px-2.5 py-1.5 hairline-border cursor-pointer text-[11px]">
+                            <input type="checkbox" id="badge-vegan" class="rounded-none">
+                            <span>[ VEGAN ]</span>
+                        </label>
+                        <label class="inline-flex items-center gap-1.5 bg-[#000000] px-2.5 py-1.5 hairline-border cursor-pointer text-[11px]">
+                            <input type="checkbox" id="badge-vegetarian" class="rounded-none">
+                            <span>[ VEGETARISCH ]</span>
+                        </label>
+                        <label class="inline-flex items-center gap-1.5 bg-[#000000] px-2.5 py-1.5 hairline-border cursor-pointer text-[11px]">
+                            <input type="checkbox" id="badge-glutenfree" class="rounded-none">
+                            <span>[ GLUTENFREI ]</span>
+                        </label>
+                        <label class="inline-flex items-center gap-1.5 bg-[#000000] px-2.5 py-1.5 hairline-border cursor-pointer text-[11px]">
+                            <input type="checkbox" id="badge-lactosefree" class="rounded-none">
+                            <span>[ LAKTOSEFREI ]</span>
+                        </label>
+                        <label class="inline-flex items-center gap-1.5 bg-[#000000] px-2.5 py-1.5 hairline-border cursor-pointer text-[11px]">
+                            <input type="checkbox" id="badge-spicy" class="rounded-none">
+                            <span>[ SCHARF ]</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- EU-Allergene & Zusatzstoffe (Rechtssicher) -->
+                <div class="space-y-1.5 pt-1 hairline-t">
+                    <div class="flex justify-between items-baseline">
+                        <label class="block sona-kicker">ALLERGENE &amp; ZUSATZSTOFFE (EU A–N)</label>
+                        <span class="text-[10px] text-[#E3D5CA] opacity-70">klicke zum schnellen hinzufügen</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1">
+                        <button type="button" onclick="toggleAllergen('A (Gluten)')" class="px-2 py-0.5 bg-[#000000] hairline-border text-[10px] hover:border-[#F5ECD7]">A (Gluten)</button>
+                        <button type="button" onclick="toggleAllergen('B (Krebstiere)')" class="px-2 py-0.5 bg-[#000000] hairline-border text-[10px] hover:border-[#F5ECD7]">B (Krebstiere)</button>
+                        <button type="button" onclick="toggleAllergen('C (Ei)')" class="px-2 py-0.5 bg-[#000000] hairline-border text-[10px] hover:border-[#F5ECD7]">C (Ei)</button>
+                        <button type="button" onclick="toggleAllergen('D (Fisch)')" class="px-2 py-0.5 bg-[#000000] hairline-border text-[10px] hover:border-[#F5ECD7]">D (Fisch)</button>
+                        <button type="button" onclick="toggleAllergen('E (Erdnuss)')" class="px-2 py-0.5 bg-[#000000] hairline-border text-[10px] hover:border-[#F5ECD7]">E (Erdnuss)</button>
+                        <button type="button" onclick="toggleAllergen('F (Soja)')" class="px-2 py-0.5 bg-[#000000] hairline-border text-[10px] hover:border-[#F5ECD7]">F (Soja)</button>
+                        <button type="button" onclick="toggleAllergen('G (Milch)')" class="px-2 py-0.5 bg-[#000000] hairline-border text-[10px] hover:border-[#F5ECD7]">G (Milch)</button>
+                        <button type="button" onclick="toggleAllergen('H (Schalenfrüchte)')" class="px-2 py-0.5 bg-[#000000] hairline-border text-[10px] hover:border-[#F5ECD7]">H (Nüsse)</button>
+                        <button type="button" onclick="toggleAllergen('I (Sellerie)')" class="px-2 py-0.5 bg-[#000000] hairline-border text-[10px] hover:border-[#F5ECD7]">I (Sellerie)</button>
+                        <button type="button" onclick="toggleAllergen('J (Senf)')" class="px-2 py-0.5 bg-[#000000] hairline-border text-[10px] hover:border-[#F5ECD7]">J (Senf)</button>
+                        <button type="button" onclick="toggleAllergen('K (Sesam)')" class="px-2 py-0.5 bg-[#000000] hairline-border text-[10px] hover:border-[#F5ECD7]">K (Sesam)</button>
+                        <button type="button" onclick="toggleAllergen('L (Sulfite)')" class="px-2 py-0.5 bg-[#000000] hairline-border text-[10px] hover:border-[#F5ECD7]">L (Sulfite)</button>
+                    </div>
+                    <input 
+                        type="text" 
+                        id="field-allergens" 
+                        placeholder="z. B. A (Gluten), D (Fisch), F (Soja), K (Sesam)" 
+                        class="w-full rounded mt-1"
+                    >
+                </div>
+
+                <!-- Zusatzhinweis / Serviertipp (optional) -->
+                <div class="space-y-1 pt-1 hairline-t">
+                    <label class="block sona-kicker">ZUSATZHINWEIS / SERVIEREMPFEHLUNG (OPTIONAL)</label>
+                    <input 
+                        type="text" 
+                        id="field-note" 
+                        placeholder="z. B. warm servieren • dip separat erhältlich" 
+                        class="w-full rounded lowercase"
+                    >
+                </div>
+
+                <!-- Footer Aktionen -->
+                <div class="pt-4 hairline-t flex items-center justify-between gap-3">
+                    <button type="button" id="btn-delete-card" onclick="deleteCurrentCard()" class="sona-btn text-red-300 hover:text-red-400 border-red-900/40 px-3 py-1.5 text-xs hidden">
+                        LÖSCHEN
+                    </button>
+                    <div class="flex items-center gap-2 ml-auto">
+                        <button type="button" onclick="closeEditModal()" class="sona-btn px-4 py-1.5 text-xs">
+                            ABBRECHEN
+                        </button>
+                        <button type="submit" class="sona-btn-filled px-5 py-1.5 text-xs font-semibold">
+                            SPEICHERN
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         5. MODAL: IMPORT / EXPORT & BACKUP
+         ========================================================================== -->
+    <div id="import-export-modal" class="no-print fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-[#000000]/85 backdrop-blur-sm">
+        <div class="bg-[#121212] hairline-border-strong rounded-none max-w-xl w-full p-5 space-y-4 text-xs">
+            
+            <div class="flex justify-between items-center hairline-b pb-3">
+                <div>
+                    <span class="sona-kicker">DATENVERWALTUNG</span>
+                    <h3 class="font-audrey text-lg text-[#F5ECD7]">BACKUP &amp; KATALOG-EXPORT</h3>
+                </div>
+                <button onclick="closeImportExportModal()" class="text-[#E3D5CA] text-lg px-2">✕</button>
+            </div>
+
+            <p class="text-[#E3D5CA] lowercase leading-relaxed">
+                alle karten und zutaten werden dauerhaft lokal im browser gespeichert. 
+                du kannst den gesamten katalog als json-datei sichern, auf einen anderen rechner übertragen oder bestehende dateien einspielen.
+            </p>
+
+            <div class="grid grid-cols-2 gap-3 pt-2">
+                <button onclick="exportCatalogJson()" class="sona-btn-filled py-2 px-3 text-center text-xs">
+                    ↓ ALS JSON HERUNTERLADEN
+                </button>
+                <label class="sona-btn py-2 px-3 text-center text-xs cursor-pointer">
+                    ↑ JSON DATEI LADEN
+                    <input type="file" id="json-file-input" accept=".json" class="hidden" onchange="importCatalogJson(event)">
+                </label>
+            </div>
+
+            <div class="pt-2 hairline-t">
+                <span class="sona-kicker mb-1 block">SCHNELL-IMPORT (CSV / TEXT)</span>
+                <p class="text-[11px] text-[#E3D5CA] mb-2 lowercase">
+                    füge mehrere gerichte zeilenweise ein (format: <code>kategorie | titel | zutaten | allergene</code>):
+                </p>
+                <textarea id="bulk-import-area" rows="3" placeholder="WARM KITCHEN | Tom Kha Gai | kokosmilch, zitronengras, galgant, champignon | F, I&#10;BUFFET SPECIAL | Summer Rolls | reispapier, lachs, minze, gurke | D, K" class="w-full text-xs font-mono"></textarea>
+                <button onclick="importBulkText()" class="sona-btn mt-2 py-1.5 px-3 text-xs w-full">
+                    ZEILEN IN DEN KATALOG ÜBERNEHMEN
+                </button>
+            </div>
+
+            <div class="pt-2 hairline-t flex justify-between items-center">
+                <button onclick="resetToDefaultData()" class="text-[11px] text-[#E3D5CA] hover:text-[#F5ECD7] underline">
+                    Auf Werkseinstellungen zurücksetzen
+                </button>
+                <button onclick="closeImportExportModal()" class="sona-btn py-1 px-4 text-xs">
+                    SCHLIESSEN
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         6. JAVASCRIPT: LOGIK, PERSISTENZ, DRUCKAUFBEREITUNG & RENDERING
+         ========================================================================== -->
+    <script>
+        const STORAGE_KEY = 'sona_buffet_cards_v1';
+        const STYLE_KEY = 'sona_buffet_style_pref_v1';
+
+        // Initialer Referenz-Katalog für SONA (authentische Menüs & Events)
+        const DEFAULT_CARDS = [
+            {
+                id: 'c1',
+                kicker: 'NIGIRI SPEZIALITÄT',
+                category: 'NIGIRI',
+                title: 'SAKE TRUFFLE NIGIRI',
+                kanji: 'サーモントリュフ',
+                ingredients: 'flambierter lachs, getrüffelte teriyaki-glaze, knuspriger kataifi, shiso-kresse',
+                badges: ['glutenfree'],
+                allergens: 'D (Fisch), F (Soja)',
+                note: '',
+                selected: true
+            },
+            {
+                id: 'c2',
+                kicker: 'NIGIRI SPEZIALITÄT',
+                category: 'NIGIRI',
+                title: 'MAGURO ABURI NIGIRI',
+                kanji: '炙りマグロ',
+                ingredients: 'kurz abgeflämmter gelbflossenthunfisch, yuzu-kosho glaze, frittierter lauch',
+                badges: [],
+                allergens: 'D (Fisch), F (Soja)',
+                note: '',
+                selected: true
+            },
+            {
+                id: 'c3',
+                kicker: 'INSIDE OUT ROLL',
+                category: 'ROLLS',
+                title: 'CRUNCHY TUNA ROLL',
+                kanji: 'スパイシーツナ',
+                ingredients: 'würziger thunfisch, gurke, tempura-crunch, togarashi-mayo, unagi-sauce',
+                badges: ['spicy'],
+                allergens: 'A (Gluten), C (Ei), D (Fisch), F (Soja), K (Sesam)',
+                note: '',
+                selected: true
+            },
+            {
+                id: 'c4',
+                kicker: 'VEGAN CREATION',
+                category: 'ROLLS',
+                title: 'GREEN VEGAN ROLL',
+                kanji: 'ヴィーガンロール',
+                ingredients: 'avocado, eingelegter kampyo-kürbis, gurke, gerösteter sesam, feine minz-sauce',
+                badges: ['vegan', 'lactosefree'],
+                allergens: 'F (Soja), K (Sesam)',
+                note: '',
+                selected: true
+            },
+            {
+                id: 'c5',
+                kicker: 'BUFFET VORSPEISE',
+                category: 'STARTER',
+                title: 'SUMMER ROLLS SAKE',
+                kanji: '生春巻き',
+                ingredients: 'reispapier, norwegischer lachs, reisnudeln, frische minze, gurke, hoisin-erdnuss-dip',
+                badges: ['lactosefree'],
+                allergens: 'D (Fisch), E (Erdnuss), F (Soja)',
+                note: 'dip separat am buffet',
+                selected: true
+            },
+            {
+                id: 'c6',
+                kicker: 'SUPPE & WÄRME',
+                category: 'STARTER',
+                title: 'TOM KHA GAI',
+                kanji: 'トムカーガイ',
+                ingredients: 'aromatische kokossuppe, zitronengras, galgant, limettenblatt, champignons, koriander',
+                badges: ['glutenfree', 'lactosefree'],
+                allergens: 'D (Fischsauce), F (Soja)',
+                note: 'warm servieren',
+                selected: true
+            },
+            {
+                id: 'c7',
+                kicker: 'WARM KITCHEN',
+                category: 'WARM',
+                title: 'YAKITORI SKEWERS',
+                kanji: '焼き鳥',
+                ingredients: 'gegrillte maishähnchen-spieße, hausgemachte tare-reduktion, gerösteter sesam',
+                badges: ['lactosefree'],
+                allergens: 'A (Gluten), F (Soja), K (Sesam)',
+                note: 'warm genießen',
+                selected: true
+            },
+            {
+                id: 'c8',
+                kicker: 'WARM KITCHEN',
+                category: 'WARM',
+                title: 'GYOZA DUMPLINGS',
+                kanji: '餃子',
+                ingredients: 'knusprig gebratene teigtaschen mit gemüse-kräuter-füllung, ponzu-sesam-dip',
+                badges: ['vegan', 'lactosefree'],
+                allergens: 'A (Gluten), F (Soja), K (Sesam)',
+                note: '',
+                selected: true
+            },
+            {
+                id: 'c9',
+                kicker: 'BUFFET KLASSIKER',
+                category: 'STARTER',
+                title: 'EDAMAME SEA SALT',
+                kanji: '枝豆',
+                ingredients: 'junge sojabohnen im dampf gegart, naturbelassenes meersalz, spritzer limette',
+                badges: ['vegan', 'glutenfree', 'lactosefree'],
+                allergens: 'F (Soja)',
+                note: '',
+                selected: true
+            },
+            {
+                id: 'c10',
+                kicker: 'SASHIMI SELECTION',
+                category: 'SASHIMI',
+                title: 'HAMACHI CARPACCIO',
+                kanji: 'ハマチ',
+                ingredients: 'gelbschwanzmakrele hauchdünn tranchiert, jalapeño-scheiben, trüffel-yuzu-ponzu',
+                badges: ['glutenfree'],
+                allergens: 'D (Fisch), F (Soja)',
+                note: 'kühl lagern',
+                selected: true
+            },
+            {
+                id: 'c11',
+                kicker: 'DESSERT KREATION',
+                category: 'DESSERT',
+                title: 'BLACK SESAME PANNA COTTA',
+                kanji: '黒胡麻パンナコッタ',
+                ingredients: 'japanische panna cotta mit geröstetem schwarzem sesam, yuzu-himbeer-coulis',
+                badges: ['vegetarian', 'glutenfree'],
+                allergens: 'G (Milch), K (Sesam)',
+                note: 'kühl servieren',
+                selected: true
+            },
+            {
+                id: 'c12',
+                kicker: 'DESSERT KREATION',
+                category: 'DESSERT',
+                title: 'MATCHA MOCHI CREME',
+                kanji: '抹茶餅',
+                ingredients: 'traditioneller reiskuchen mit ceremonieller uji-matcha-füllung und adzuki-bohne',
+                badges: ['vegan', 'glutenfree', 'lactosefree'],
+                allergens: '',
+                note: '',
+                selected: true
+            }
+        ];
+
+        // State
+        let cards = [];
+        let activeStyle = 'dark'; // 'dark' | 'light'
+
+        // Initialisierung
+        function initApp() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    cards = JSON.parse(stored);
+                } catch (e) {
+                    cards = DEFAULT_CARDS;
+                }
+            } else {
+                cards = DEFAULT_CARDS;
+                saveCards();
+            }
+
+            const storedStyle = localStorage.getItem(STYLE_KEY);
+            if (storedStyle === 'light' || storedStyle === 'dark') {
+                activeStyle = storedStyle;
+            }
+            updateStyleButtons();
+
+            renderCards();
+        }
+
+        function saveCards() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(cards));
+            updateStats();
+        }
+
+        // Stil-Umschaltung
+        function setCardStyle(styleName) {
+            activeStyle = styleName;
+            localStorage.setItem(STYLE_KEY, activeStyle);
+            updateStyleButtons();
+            renderCards();
+        }
+
+        function updateStyleButtons() {
+            const btnDark = document.getElementById('style-toggle-dark');
+            const btnLight = document.getElementById('style-toggle-light');
+            if (activeStyle === 'dark') {
+                btnDark.className = 'flex-1 py-1 px-2 text-[10px] tracking-wider uppercase font-medium rounded transition bg-[#F5ECD7] text-[#000000]';
+                btnLight.className = 'flex-1 py-1 px-2 text-[10px] tracking-wider uppercase font-medium rounded transition text-[#E3D5CA] hover:text-[#F5ECD7]';
+            } else {
+                btnLight.className = 'flex-1 py-1 px-2 text-[10px] tracking-wider uppercase font-medium rounded transition bg-[#F5ECD7] text-[#000000]';
+                btnDark.className = 'flex-1 py-1 px-2 text-[10px] tracking-wider uppercase font-medium rounded transition text-[#E3D5CA] hover:text-[#F5ECD7]';
+            }
+        }
+
+        // HTML-Vorlage für eine einzelne 85x55mm Einsteckkarte generieren
+        function generateCardHtml(card, isPrint = false) {
+            const styleClass = activeStyle === 'dark' ? 'card-preview-dark' : 'card-preview-light';
+            
+            // Badges formatieren
+            let badgesHtml = '';
+            if (card.badges && card.badges.length > 0) {
+                const badgeLabels = {
+                    'vegan': 'VEGAN',
+                    'vegetarian': 'VEGETARISCH',
+                    'glutenfree': 'GLUTENFREI',
+                    'lactosefree': 'LAKTOSEFREI',
+                    'spicy': 'SCHARF'
+                };
+                badgesHtml = card.badges.map(b => `<span class="c-badge text-[8px] uppercase tracking-wider px-1.5 py-0.5 font-medium leading-none">[ ${badgeLabels[b] || b} ]</span>`).join(' ');
+            }
+
+            // Fußzeilen-Meta (Allergene / Notizen)
+            let metaParts = [];
+            if (card.allergens && card.allergens.trim() !== '') {
+                metaParts.push(`<span>Allergene: ${card.allergens}</span>`);
+            }
+            if (card.note && card.note.trim() !== '') {
+                metaParts.push(`<span>${card.note}</span>`);
+            }
+            const metaContent = metaParts.length > 0 ? metaParts.join(' &bull; ') : 'sona japanese sushi &amp; kitchen bar';
+
+            return `
+                <div class="buffet-card ${styleClass}">
+                    <!-- Enso-Hintergrund SVG dezent im Hintergrund -->
+                    <svg viewBox="0 0 320 260" class="absolute -right-4 -bottom-6 w-24 h-auto pointer-events-none" aria-hidden="true">
+                        <path class="c-enso" d="M 110 88 C 122 44, 174 20, 224 38 C 276 56, 302 115, 284 170 C 266 222, 206 248, 152 228 C 122 216, 102 192, 95 162" 
+                              fill="none" stroke-width="8" stroke-linecap="round" />
+                    </svg>
+
+                    <!-- 1. Kicker & Kanji -->
+                    <div class="flex justify-between items-baseline gap-2 z-10 leading-tight">
+                        <span class="c-kicker sona-kicker font-medium">${card.kicker || 'SONA SPEISE'}</span>
+                        ${card.kanji ? `<span class="c-kanji text-[10px] font-light tracking-widest">${card.kanji}</span>` : ''}
+                    </div>
+
+                    <!-- 2. Haupttitel & Badges -->
+                    <div class="my-auto py-1 z-10 space-y-1">
+                        <div class="c-title font-audrey-bold text-[13.5pt] leading-[1.1] tracking-[0.08em]">${card.title}</div>
+                        ${badgesHtml ? `<div class="flex flex-wrap gap-1 pt-0.5">${badgesHtml}</div>` : ''}
+                        <p class="c-prose text-[8.5pt] leading-tight font-light lowercase pt-0.5 line-clamp-2">
+                            ${card.ingredients}
+                        </p>
+                    </div>
+
+                    <!-- 3. Fußzeile (Allergene / Rechtssicherheit & Enso) -->
+                    <div class="c-meta pt-1.5 flex justify-between items-center text-[7pt] z-10 leading-none">
+                        <div class="truncate max-w-[80%] font-light">${metaContent}</div>
+                        <div class="font-audrey text-[7pt] tracking-[0.15em] shrink-0 opacity-80">SONA</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Screen Rendering
+        function renderCards() {
+            const search = document.getElementById('search-input').value.toLowerCase().trim();
+            const cat = document.getElementById('category-filter').value;
+            const container = document.getElementById('interactive-cards-grid');
+
+            const filtered = cards.filter(card => {
+                const matchesCat = (cat === 'ALL' || card.category === cat);
+                const matchesSearch = !search || 
+                    card.title.toLowerCase().includes(search) || 
+                    card.ingredients.toLowerCase().includes(search) || 
+                    (card.kicker && card.kicker.toLowerCase().includes(search)) || 
+                    (card.allergens && card.allergens.toLowerCase().includes(search)) ||
+                    (card.badges && card.badges.some(b => b.toLowerCase().includes(search)));
+                return matchesCat && matchesSearch;
+            });
+
+            document.getElementById('visible-cards-count').innerText = filtered.length;
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-[#E3D5CA] bg-[#191919] hairline-border p-6 rounded">
+                        <p class="sona-kicker mb-1">KEINE TREFFER</p>
+                        <p class="text-xs lowercase">es wurden keine karten für diesen filter gefunden.</p>
+                        <button onclick="document.getElementById('search-input').value=''; document.getElementById('category-filter').value='ALL'; renderCards();" class="sona-btn mt-3 py-1 px-3 text-xs">
+                            FILTER ZURÜCKSETZEN
+                        </button>
+                    </div>
+                `;
+                updateStats();
+                return;
+            }
+
+            container.innerHTML = filtered.map(card => `
+                <div class="bg-[#191919] hairline-border p-3.5 rounded flex flex-col justify-between gap-3 group transition hover:border-[#F5ECD7]/60">
+                    
+                    <!-- Oberer Streifen: Checkbox für Druckauswahl & Aktions-Buttons -->
+                    <div class="flex items-center justify-between gap-2 hairline-b pb-2">
+                        <label class="flex items-center gap-2 cursor-pointer select-none">
+                            <input 
+                                type="checkbox" 
+                                ${card.selected ? 'checked' : ''} 
+                                onchange="toggleCardSelect('${card.id}', this.checked)"
+                                class="w-4 h-4 cursor-pointer"
+                            >
+                            <span class="text-[11px] font-medium tracking-wider text-[#F5ECD7]">
+                                ${card.selected ? '[ ZUM DRUCK GEWÄHLT ]' : '[ NICHT GEWÄHLT ]'}
+                            </span>
+                        </label>
+
+                        <div class="flex items-center gap-1">
+                            <button onclick="openEditModal('${card.id}')" class="text-[10px] tracking-wider uppercase px-2 py-0.5 bg-[#000000] hairline-border text-[#E3D5CA] hover:text-[#F5ECD7] hover:border-[#F5ECD7]">
+                                EDITIEREN
+                            </button>
+                            <button onclick="duplicateCard('${card.id}')" class="text-[10px] tracking-wider uppercase px-2 py-0.5 bg-[#000000] hairline-border text-[#E3D5CA] hover:text-[#F5ECD7] hover:border-[#F5ECD7]" title="Karte duplizieren">
+                                KOPIEREN
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Karte in physischer Vorschau-Optik zentriert -->
+                    <div class="flex justify-center items-center py-1 overflow-x-auto">
+                        <div class="crop-container ${activeStyle === 'dark' ? 'dark-marks' : ''}">
+                            <div class="crop-mark crop-tl"></div>
+                            <div class="crop-mark crop-tr"></div>
+                            <div class="crop-mark crop-bl"></div>
+                            <div class="crop-mark crop-br"></div>
+                            ${generateCardHtml(card)}
+                        </div>
+                    </div>
+
+                    <!-- Untere Zusatzinfo -->
+                    <div class="pt-1.5 hairline-t flex justify-between items-center text-[10px] text-[#E3D5CA] opacity-80">
+                        <span class="truncate">${card.kicker} &bull; ${card.category}</span>
+                        <span class="tabular-nums font-mono text-[9px]">${card.id}</span>
+                    </div>
+
+                </div>
+            `).join('');
+
+            updateStats();
+        }
+
+        // Statistiken aktualisieren
+        function updateStats() {
+            const total = cards.length;
+            const selected = cards.filter(c => c.selected).length;
+            const pages = Math.ceil(selected / 8); // 8 Karten pro DIN A4 Bogen
+
+            document.getElementById('stat-total-count').innerText = total;
+            document.getElementById('stat-selected-count').innerText = selected;
+            document.getElementById('stat-pages-count').innerText = `${pages} Seite${pages === 1 ? '' : 'n'} (DIN A4)`;
+        }
+
+        // Auswahl steuern
+        function toggleCardSelect(cardId, isSelected) {
+            const card = cards.find(c => c.id === cardId);
+            if (card) {
+                card.selected = isSelected;
+                saveCards();
+                renderCards();
+            }
+        }
+
+        function selectAll(state) {
+            const search = document.getElementById('search-input').value.toLowerCase().trim();
+            const cat = document.getElementById('category-filter').value;
+
+            cards.forEach(card => {
+                const matchesCat = (cat === 'ALL' || card.category === cat);
+                const matchesSearch = !search || 
+                    card.title.toLowerCase().includes(search) || 
+                    card.ingredients.toLowerCase().includes(search);
+                if (matchesCat && matchesSearch) {
+                    card.selected = state;
+                }
+            });
+            saveCards();
+            renderCards();
+        }
+
+        // ======================================================================
+        // DRUCKAUFBEREITUNG (DIN A4 mit Schnittmarken)
+        // ======================================================================
+        function preparePrintSheet() {
+            const selectedCards = cards.filter(c => c.selected);
+            const container = document.getElementById('print-sheet-wrapper');
+
+            if (selectedCards.length === 0) {
+                alert('Bitte wähle mindestens ein Gericht für den Druckbogen aus!');
+                return false;
+            }
+
+            // In 8er Gruppen (DIN A4 Seiten) splitten
+            const CARDS_PER_PAGE = 8;
+            let pagesHtml = '';
+
+            for (let i = 0; i < selectedCards.length; i += CARDS_PER_PAGE) {
+                const chunk = selectedCards.slice(i, i + CARDS_PER_PAGE);
+                
+                const cardsHtml = chunk.map(card => `
+                    <div class="crop-container ${activeStyle === 'dark' ? 'dark-marks' : ''}">
+                        <div class="crop-mark crop-tl"></div>
+                        <div class="crop-mark crop-tr"></div>
+                        <div class="crop-mark crop-bl"></div>
+                        <div class="crop-mark crop-br"></div>
+                        ${generateCardHtml(card, true)}
+                    </div>
+                `).join('');
+
+                pagesHtml += `
+                    <div class="print-page-grid py-2">
+                        ${cardsHtml}
+                    </div>
+                `;
+            }
+
+            container.innerHTML = pagesHtml;
+            return true;
+        }
+
+        function triggerPrint() {
+            const ready = preparePrintSheet();
+            if (ready) {
+                window.print();
+            }
+        }
+
+        // ======================================================================
+        // MODAL LOGIK (ANLEGEN / EDITIEREN / DUPLIZIEREN)
+        // ======================================================================
+        function openEditModal(cardId) {
+            const modal = document.getElementById('edit-modal');
+            const titleEl = document.getElementById('modal-title');
+            const delBtn = document.getElementById('btn-delete-card');
+
+            document.getElementById('card-form').reset();
+            document.getElementById('badge-vegan').checked = false;
+            document.getElementById('badge-vegetarian').checked = false;
+            document.getElementById('badge-glutenfree').checked = false;
+            document.getElementById('badge-lactosefree').checked = false;
+            document.getElementById('badge-spicy').checked = false;
+
+            if (cardId) {
+                const card = cards.find(c => c.id === cardId);
+                if (!card) return;
+
+                titleEl.innerText = 'GERICHT BEARBEITEN';
+                document.getElementById('edit-card-id').value = card.id;
+                document.getElementById('field-kicker').value = card.kicker || '';
+                document.getElementById('field-title').value = card.title || '';
+                document.getElementById('field-kanji').value = card.kanji || '';
+                document.getElementById('field-category-group').value = card.category || 'NIGIRI';
+                document.getElementById('field-ingredients').value = card.ingredients || '';
+                document.getElementById('field-allergens').value = card.allergens || '';
+                document.getElementById('field-note').value = card.note || '';
+
+                if (card.badges) {
+                    document.getElementById('badge-vegan').checked = card.badges.includes('vegan');
+                    document.getElementById('badge-vegetarian').checked = card.badges.includes('vegetarian');
+                    document.getElementById('badge-glutenfree').checked = card.badges.includes('glutenfree');
+                    document.getElementById('badge-lactosefree').checked = card.badges.includes('lactosefree');
+                    document.getElementById('badge-spicy').checked = card.badges.includes('spicy');
+                }
+
+                delBtn.classList.remove('hidden');
+            } else {
+                titleEl.innerText = 'NEUES GERICHT ANLEGEN';
+                document.getElementById('edit-card-id').value = '';
+                document.getElementById('field-kicker').value = 'BUFFET SPEZIALITÄT';
+                delBtn.classList.add('hidden');
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeEditModal() {
+            document.getElementById('edit-modal').classList.add('hidden');
+        }
+
+        function saveCardForm(e) {
+            e.preventDefault();
+            const id = document.getElementById('edit-card-id').value;
+
+            // Badges sammeln
+            const badges = [];
+            if (document.getElementById('badge-vegan').checked) badges.push('vegan');
+            if (document.getElementById('badge-vegetarian').checked) badges.push('vegetarian');
+            if (document.getElementById('badge-glutenfree').checked) badges.push('glutenfree');
+            if (document.getElementById('badge-lactosefree').checked) badges.push('lactosefree');
+            if (document.getElementById('badge-spicy').checked) badges.push('spicy');
+
+            const newCard = {
+                id: id ? id : 'c_' + Date.now().toString(36),
+                kicker: document.getElementById('field-kicker').value.toUpperCase().trim(),
+                title: document.getElementById('field-title').value.toUpperCase().trim(),
+                kanji: document.getElementById('field-kanji').value.trim(),
+                category: document.getElementById('field-category-group').value,
+                ingredients: document.getElementById('field-ingredients').value.toLowerCase().trim(),
+                badges: badges,
+                allergens: document.getElementById('field-allergens').value.trim(),
+                note: document.getElementById('field-note').value.toLowerCase().trim(),
+                selected: true
+            };
+
+            if (id) {
+                const idx = cards.findIndex(c => c.id === id);
+                if (idx !== -1) {
+                    newCard.selected = cards[idx].selected;
+                    cards[idx] = newCard;
+                }
+            } else {
+                cards.unshift(newCard);
+            }
+
+            saveCards();
+            closeEditModal();
+            renderCards();
+        }
+
+        function deleteCurrentCard() {
+            const id = document.getElementById('edit-card-id').value;
+            if (!id) return;
+            if (confirm('Möchtest du diese Speisekarte unwiderruflich löschen?')) {
+                cards = cards.filter(c => c.id !== id);
+                saveCards();
+                closeEditModal();
+                renderCards();
+            }
+        }
+
+        function duplicateCard(cardId) {
+            const card = cards.find(c => c.id === cardId);
+            if (!card) return;
+            const copy = JSON.parse(JSON.stringify(card));
+            copy.id = 'c_' + Date.now().toString(36);
+            copy.title = copy.title + ' (KOPIE)';
+            copy.selected = true;
+            cards.unshift(copy);
+            saveCards();
+            renderCards();
+        }
+
+        function toggleAllergen(codeStr) {
+            const input = document.getElementById('field-allergens');
+            let current = input.value.split(',').map(s => s.trim()).filter(Boolean);
+            if (current.includes(codeStr)) {
+                current = current.filter(s => s !== codeStr);
+            } else {
+                current.push(codeStr);
+            }
+            input.value = current.join(', ');
+        }
+
+        // ======================================================================
+        // BACKUP & IMPORT LOGIK
+        // ======================================================================
+        function openImportExportModal() {
+            document.getElementById('import-export-modal').classList.remove('hidden');
+        }
+
+        function closeImportExportModal() {
+            document.getElementById('import-export-modal').classList.add('hidden');
+        }
+
+        function exportCatalogJson() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(cards, null, 2));
+            const dlAnchor = document.createElement('a');
+            dlAnchor.setAttribute("href", dataStr);
+            dlAnchor.setAttribute("download", `sona_buffet_katalog_${new Date().toISOString().slice(0, 10)}.json`);
+            document.body.appendChild(dlAnchor);
+            dlAnchor.click();
+            dlAnchor.remove();
+        }
+
+        function importCatalogJson(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    if (Array.isArray(parsed)) {
+                        cards = parsed;
+                        saveCards();
+                        renderCards();
+                        closeImportExportModal();
+                        alert('Katalog erfolgreich importiert (' + cards.length + ' Positionen geladen).');
+                    } else {
+                        alert('Ungültiges Datenformat in der JSON-Datei.');
+                    }
+                } catch (err) {
+                    alert('Fehler beim Lesen der JSON-Datei: ' + err.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function importBulkText() {
+            const text = document.getElementById('bulk-import-area').value.trim();
+            if (!text) return;
+
+            const lines = text.split('\n');
+            let addedCount = 0;
+
+            lines.forEach(line => {
+                const parts = line.split('|').map(p => p.trim());
+                if (parts.length >= 2) {
+                    const kicker = parts[0] || 'BUFFET SPECIAL';
+                    const title = parts[1] || 'GERICHT';
+                    const ingredients = parts[2] || '';
+                    const allergens = parts[3] || '';
+
+                    cards.unshift({
+                        id: 'c_' + Date.now().toString(36) + Math.random().toString(36).substr(2, 4),
+                        kicker: kicker.toUpperCase(),
+                        title: title.toUpperCase(),
+                        kanji: '',
+                        category: 'SPECIAL',
+                        ingredients: ingredients.toLowerCase(),
+                        badges: [],
+                        allergens: allergens,
+                        note: '',
+                        selected: true
+                    });
+                    addedCount++;
+                }
+            });
+
+            if (addedCount > 0) {
+                saveCards();
+                renderCards();
+                closeImportExportModal();
+                document.getElementById('bulk-import-area').value = '';
+                alert(`${addedCount} neue Gerichte erfolgreich importiert!`);
+            } else {
+                alert('Keine gültigen Zeilen erkannt. Bitte das Format "Kategorie | Titel | Zutaten | Allergene" beachten.');
+            }
+        }
+
+        function openQuickAddSampleData() {
+            // Prüfen ob Tom Kha oder Summer Rolls schon da sind
+            const exists = cards.some(c => c.title.includes('SUMMER ROLLS') || c.title.includes('TOM KHA'));
+            if (!exists) {
+                cards.unshift(
+                    {
+                        id: 'event_1',
+                        kicker: 'BUFFET VORSPEISE',
+                        category: 'STARTER',
+                        title: 'SUMMER ROLLS SAKE',
+                        kanji: '生春巻き',
+                        ingredients: 'reispapier, norwegischer lachs, reisnudeln, frische minze, gurke, hoisin-erdnuss-dip',
+                        badges: ['lactosefree'],
+                        allergens: 'D (Fisch), E (Erdnuss), F (Soja)',
+                        note: 'dip separat am buffet',
+                        selected: true
+                    },
+                    {
+                        id: 'event_2',
+                        kicker: 'SUPPE & WÄRME',
+                        category: 'STARTER',
+                        title: 'TOM KHA GAI',
+                        kanji: 'トムカーガイ',
+                        ingredients: 'aromatische kokossuppe, zitronengras, galgant, limettenblatt, champignons, koriander',
+                        badges: ['glutenfree', 'lactosefree'],
+                        allergens: 'D (Fischsauce), F (Soja)',
+                        note: 'warm servieren',
+                        selected: true
+                    }
+                );
+                saveCards();
+                renderCards();
+                alert('Event-Positionen (Summer Rolls & Tom Kha) wurden an den Anfang des Katalogs hinzugefügt!');
+            } else {
+                alert('Die Event-Positionen (Summer Rolls & Tom Kha) sind bereits in der Liste vorhanden.');
+            }
+        }
+
+        function resetToDefaultData() {
+            if (confirm('Möchtest du den Katalog wirklich auf die SONA Referenzgerichte zurücksetzen? Eigene Änderungen gehen dabei verloren.')) {
+                cards = JSON.parse(JSON.stringify(DEFAULT_CARDS));
+                saveCards();
+                renderCards();
+                closeImportExportModal();
+            }
+        }
+
+        // Start
+        window.addEventListener('DOMContentLoaded', initApp);
+    </script>
+
+</body>
+</html>

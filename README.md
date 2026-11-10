@@ -70,10 +70,11 @@ Gemäß der verbindlichen SONA-Markenidentität gelten absolute Design-Vorgaben:
 
 ```
 Sona-Lernhub/
-├── index.html        # Vollständige autarke Single-File-Anwendung (HTML5, Tailwind, JS, SVGs)
-├── GEMINI.md         # Feste Gestaltungs- und Entwicklungsregeln für KI-Assistenten
-├── README.md         # Projekt-Dokumentation & Bedienungsanleitung
-└── .gitignore        # Ausschluss von Betriebssystem- & Editor-Dateien
+├── index.html                  # Vollständige autarke Single-File-Anwendung (Lernhub, Schulungen, Google Sites)
+├── buffet_beschilderung.html   # Interaktiver Buffet-Karten-Generator & Druckbogen (Einsteckkarten 85x55mm)
+├── GEMINI.md                   # Feste Gestaltungs- und Entwicklungsregeln für KI-Assistenten
+├── README.md                   # Projekt-Dokumentation & Bedienungsanleitung
+└── .gitignore                  # Ausschluss von Betriebssystem- & Editor-Dateien
 ```
 
 ---
